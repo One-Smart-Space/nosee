@@ -7,6 +7,8 @@
         "dev": "vite"
     },
     "devDependencies": {
+        "@fontsource/ibm-plex-sans": "5.2.8",
+        "@fontsource/ubuntu-sans": "5.2.8",
         "@tailwindcss/vite": "^4.0.0",
         "concurrently": "^9.0.1",
         "laravel-vite-plugin": "^3.1",
