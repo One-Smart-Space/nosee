@@ -13,6 +13,7 @@ class ErrorPageTest extends TestCase
         $this->get('/not-a-route')
             ->assertNotFound()
             ->assertSee('data-desktop-navigation', false)
-            ->assertSee('data-mobile-navigation', false);
+            ->assertSee('data-mobile-navigation', false)
+            ->assertSee('data-site-footer', false);
     }
 }

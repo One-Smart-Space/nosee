@@ -114,6 +114,61 @@ final class ContentSchemaRegistry
                 'name' => ['required', 'string'],
                 'tagline' => ['required', 'string'],
                 'description' => ['required', 'string'],
+                'footer' => ['required', 'array'],
+                'footer.description' => ['required', 'string'],
+                'footer.link_groups' => ['required', 'array', 'size:1'],
+                'footer.link_groups.*.heading' => ['required', 'string', 'distinct:strict'],
+                'footer.link_groups.*.links' => ['required', 'array', 'min:1'],
+                'footer.link_groups.*.links.*.label' => ['required', 'string', 'distinct:strict'],
+                'footer.link_groups.*.links.*.url' => ['required', 'string', 'starts_with:/'],
+                'footer.link_groups.0.heading' => ['required', 'string', Rule::in(['Quick Links'])],
+                'footer.link_groups.0.links' => ['required', 'array', 'size:5'],
+                'footer.contact' => ['required', 'array'],
+                'footer.contact.heading' => ['required', 'string'],
+                'footer.contact.address' => ['required', 'string'],
+                'footer.contact.email' => ['required', 'email:rfc'],
+                'footer.contact.phone' => ['required', 'string'],
+                'footer.social_links' => ['required', 'array', 'size:5'],
+                'footer.social_links.*.label' => ['required', 'string', 'distinct:strict'],
+                'footer.social_links.*.url' => ['required', 'url'],
+                'footer.social_links.*.icon' => [
+                    'required',
+                    'string',
+                    'starts_with:/',
+                    $this->existingPublicFileRule(),
+                ],
+                'footer.legal_links' => ['required', 'array', 'size:2'],
+                'footer.legal_links.*.label' => ['required', 'string', 'distinct:strict'],
+                'footer.legal_links.*.url' => ['required', 'string', 'starts_with:/'],
+                'footer.legal_links.0.label' => ['required', 'string', Rule::in(['Privacy Policy'])],
+                'footer.legal_links.0.url' => ['required', 'string', Rule::in(['/privacy'])],
+                'footer.legal_links.1.label' => ['required', 'string', Rule::in(['Terms of Use'])],
+                'footer.legal_links.1.url' => ['required', 'string', Rule::in(['/terms'])],
+                'footer.newsletter' => ['required', 'array'],
+                'footer.newsletter.heading' => ['required', 'string'],
+                'footer.newsletter.description' => ['required', 'string'],
+                'footer.newsletter.label' => ['required', 'string'],
+                'footer.newsletter.placeholder' => ['required', 'string'],
+                'footer.newsletter.button_label' => ['required', 'string'],
+                'footer.newsletter.enabled' => $this->strictBooleanRules(),
+                'footer.newsletter.action' => [
+                    'present',
+                    'nullable',
+                    'string',
+                    'required_if:footer.newsletter.enabled,true',
+                    static function (string $attribute, mixed $value, Closure $fail): void {
+                        if (
+                            is_string($value)
+                            && ! str_starts_with($value, '/')
+                            && filter_var($value, FILTER_VALIDATE_URL) === false
+                        ) {
+                            $fail("The {$attribute} field must be an internal path or valid URL.");
+                        }
+                    },
+                ],
+                'footer.newsletter.disabled_text' => ['required', 'string'],
+                'footer.support_url' => ['required', 'string', 'starts_with:/'],
+                'footer.copyright' => ['required', 'string'],
             ],
             self::NAVIGATION => [
                 'primary' => ['required', 'array', 'size:6'],

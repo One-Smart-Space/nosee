@@ -28,5 +28,17 @@
         <main id="main-content" @class(['pt-[4.5rem] lg:pt-16' => ! $transparentNavigation])>
             @yield('content')
         </main>
+
+        {{-- Render validated shared footer content after every page using this layout. --}}
+        <x-footer.site-footer
+            :description="$footer['description']"
+            :link-groups="$footer['link_groups']"
+            :contact="$footer['contact']"
+            :social-links="$footer['social_links']"
+            :legal-links="$footer['legal_links']"
+            :newsletter="$footer['newsletter']"
+            :support-url="$footer['support_url']"
+            :copyright="$footer['copyright']"
+        />
     </body>
 </html>
