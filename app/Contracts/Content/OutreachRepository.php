@@ -1,0 +1,9 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Contracts\Content;
+
+interface OutreachRepository extends ContentRepository
+{
+}
