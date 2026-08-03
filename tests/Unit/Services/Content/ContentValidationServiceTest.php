@@ -15,7 +15,7 @@ class ContentValidationServiceTest extends TestCase
         $result = $this->validation()->validateAll();
 
         $this->assertSame([], $result['errors']);
-        $this->assertSame(16, $result['files']);
+        $this->assertSame(41, $result['files']);
     }
 
     public function test_missing_required_field_fails(): void
@@ -131,15 +131,15 @@ class ContentValidationServiceTest extends TestCase
 
     public function test_empty_publication_authors_fail(): void
     {
+        $record = require base_path('content/publications/low-latitude-geomagnetic-storm-responses.php');
+        $record['authors'] = [];
+
         $this->assertErrorContains(
-            $this->validation()->validateRecord(ContentSchemaRegistry::PUBLICATION, [
-                'slug' => 'starter-publication',
-                'title' => 'Starter Publication',
-                'type' => 'report',
-                'authors' => [],
-                'publication_date' => '2026-01-01',
-                'external_url' => null,
-            ], 'starter-publication'),
+            $this->validation()->validateRecord(
+                ContentSchemaRegistry::PUBLICATION,
+                $record,
+                $record['slug'],
+            ),
             'authors',
         );
     }

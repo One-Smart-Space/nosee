@@ -17,6 +17,9 @@ final class HomeController extends Controller
         return view('pages.home', [
             'heroItems' => $homepage['hero']['items'],
             'monitoringRecords' => $homepage['monitoring'],
+            'researchOutputs' => $homepage['research_outputs'],
+            'trendingArticles' => $homepage['trending_news'],
+            'upcomingEvents' => $homepage['upcoming_events'],
             'transparentNavigation' => true,
         ]);
     }

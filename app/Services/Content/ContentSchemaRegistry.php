@@ -10,6 +10,43 @@ use InvalidArgumentException;
 
 final class ContentSchemaRegistry
 {
+    private const EVENT_TYPES = [
+        'conference',
+        'workshop',
+        'seminar',
+        'lecture',
+        'training',
+        'meeting',
+        'outreach',
+        'deadline',
+    ];
+
+    private const NEWS_CATEGORIES = [
+        'organisation-news',
+        'research-news',
+        'member-achievement',
+        'partnership',
+        'funding-opportunity',
+        'scientific-development',
+        'outreach-report',
+    ];
+
+    private const PUBLICATION_TYPES = [
+        'journal-article',
+        'conference-paper',
+        'book-chapter',
+        'report',
+    ];
+
+    // Match the five research-area slugs already established by navigation content.
+    private const RESEARCH_AREA_SLUGS = [
+        'atmosphere-and-air-quality',
+        'climate-science',
+        'earth-and-space-informatics',
+        'energy-resources-and-environment',
+        'space-weather',
+    ];
+
     public const ABOUT = 'about';
 
     public const DATA_ITEM = 'data-item';
@@ -208,27 +245,56 @@ final class ContentSchemaRegistry
             self::PUBLICATION => [
                 'slug' => ['required', 'string'],
                 'title' => ['required', 'string'],
-                'type' => ['required', 'string'],
+                'type' => ['required', 'string', Rule::in(self::PUBLICATION_TYPES)],
                 'authors' => ['required', 'array', 'min:1'],
                 'authors.*' => ['required', 'string'],
                 'publication_date' => ['required', 'date_format:Y-m-d'],
-                'external_url' => ['present', 'nullable', 'url'],
+                'publication_source' => ['required', 'string'],
+                'research_area' => ['required', 'string', Rule::in(self::RESEARCH_AREA_SLUGS)],
+                'doi' => [
+                    'required',
+                    'string',
+                    static function (string $attribute, mixed $value, Closure $fail): void {
+                        if (! is_string($value) || preg_match('/^10\.\d{4,9}\/[-._;()\/:a-z0-9]+$/i', $value) !== 1) {
+                            $fail("The {$attribute} field must be a valid DOI identifier without a URL prefix.");
+                        }
+                    },
+                ],
+                'featured' => $this->strictBooleanRules(),
             ],
             self::EVENT => [
                 'slug' => ['required', 'string'],
                 'title' => ['required', 'string'],
-                'type' => ['required', 'string'],
+                'type' => ['required', 'string', Rule::in(self::EVENT_TYPES)],
+                'summary' => ['required', 'string'],
                 'start_date' => ['required', 'date_format:Y-m-d'],
                 'end_date' => ['required', 'date_format:Y-m-d', 'after_or_equal:start_date'],
                 'timezone' => ['required', 'string', 'timezone'],
                 'venue' => ['required', 'string'],
                 'registration_url' => ['present', 'nullable', 'url'],
+                'featured' => $this->strictBooleanRules(),
             ],
             self::NEWS => [
                 'slug' => ['required', 'string'],
                 'title' => ['required', 'string'],
                 'excerpt' => ['required', 'string'],
+                'category' => ['required', 'string', Rule::in(self::NEWS_CATEGORIES)],
                 'published_at' => ['required', 'date_format:Y-m-d\TH:i:sP'],
+                'image' => [
+                    'required',
+                    'string',
+                    'starts_with:/media/trending/',
+                    $this->existingPublicFileRule(),
+                ],
+                'image_alt' => [
+                    'required',
+                    'string',
+                    static function (string $attribute, mixed $value, Closure $fail): void {
+                        if (is_string($value) && trim($value) === '') {
+                            $fail("The {$attribute} field must not be empty.");
+                        }
+                    },
+                ],
                 'featured' => $this->strictBooleanRules(),
             ],
             self::OUTREACH => [

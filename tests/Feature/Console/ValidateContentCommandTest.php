@@ -51,7 +51,7 @@ class ValidateContentCommandTest extends TestCase
     public function test_command_returns_success_for_valid_fixtures(): void
     {
         $this->artisan('content:validate')
-            ->expectsOutput('Content validation passed: 16 files validated.')
+            ->expectsOutput('Content validation passed: 41 files validated.')
             ->assertExitCode(0);
     }
 
@@ -64,6 +64,55 @@ class ValidateContentCommandTest extends TestCase
 
         $this->artisan('content:validate')
             ->expectsOutputToContain('Exactly three data records must enable homepage monitoring.')
+            ->assertExitCode(1);
+    }
+
+    public function test_command_requires_exactly_three_featured_publications(): void
+    {
+        $path = 'publications/low-latitude-geomagnetic-storm-responses.php';
+        $record = require $this->path($path);
+        $record['featured'] = false;
+        $this->writeRecord($path, $record);
+
+        $this->artisan('content:validate')
+            ->expectsOutputToContain('Exactly three publication records must be featured.')
+            ->assertExitCode(1);
+    }
+
+    public function test_command_requires_exactly_one_featured_news_record(): void
+    {
+        $path = 'news/solar-storm-monitoring-exercise.php';
+        $record = require $this->path($path);
+        $record['featured'] = false;
+        $this->writeRecord($path, $record);
+
+        $this->artisan('content:validate')
+            ->expectsOutputToContain('Exactly one news record must be featured.')
+            ->assertExitCode(1);
+    }
+
+    public function test_command_requires_exactly_three_featured_upcoming_events(): void
+    {
+        $path = 'events/regional-space-weather-conference.php';
+        $record = require $this->path($path);
+        $record['featured'] = false;
+        $this->writeRecord($path, $record);
+
+        $this->artisan('content:validate')
+            ->expectsOutputToContain('Exactly three upcoming event records must be featured.')
+            ->assertExitCode(1);
+    }
+
+    public function test_command_rejects_a_featured_event_that_has_passed(): void
+    {
+        $path = 'events/regional-space-weather-conference.php';
+        $record = require $this->path($path);
+        $record['start_date'] = '2025-01-01';
+        $record['end_date'] = '2025-01-02';
+        $this->writeRecord($path, $record);
+
+        $this->artisan('content:validate')
+            ->expectsOutputToContain('Featured events must not have passed.')
             ->assertExitCode(1);
     }
 

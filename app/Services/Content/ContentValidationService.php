@@ -6,6 +6,7 @@ namespace App\Services\Content;
 
 use App\Exceptions\InvalidContentFileException;
 use App\Exceptions\InvalidContentPathException;
+use DateTimeImmutable;
 use Illuminate\Contracts\Validation\Factory;
 
 final class ContentValidationService
@@ -26,6 +27,10 @@ final class ContentValidationService
         $files = 0;
         $errors = [];
         $homepageMonitoringRecords = 0;
+        $featuredPublications = 0;
+        $featuredNewsRecords = 0;
+        $featuredUpcomingEvents = 0;
+        $today = (new DateTimeImmutable('today'))->format('Y-m-d');
 
         foreach ($this->schemas->singletons() as $path => $schema) {
             $files++;
@@ -53,12 +58,40 @@ final class ContentValidationService
                 if ($collection === 'data/items' && ($content['homepage_monitoring'] ?? null) === true) {
                     $homepageMonitoringRecords++;
                 }
+
+                if ($collection === 'publications' && ($content['featured'] ?? null) === true) {
+                    $featuredPublications++;
+                }
+
+                if ($collection === 'news' && ($content['featured'] ?? null) === true) {
+                    $featuredNewsRecords++;
+                }
+
+                if ($collection === 'events' && ($content['featured'] ?? null) === true) {
+                    if (($content['end_date'] ?? '') >= $today) {
+                        $featuredUpcomingEvents++;
+                    } else {
+                        $errors[$path][] = 'Featured events must not have passed.';
+                    }
+                }
             }
         }
 
         // Keep the homepage selection deterministic without coupling it to file names.
         if ($homepageMonitoringRecords !== 3) {
             $errors['data/items'][] = 'Exactly three data records must enable homepage monitoring.';
+        }
+
+        if ($featuredPublications !== 3) {
+            $errors['publications'][] = 'Exactly three publication records must be featured.';
+        }
+
+        if ($featuredNewsRecords !== 1) {
+            $errors['news'][] = 'Exactly one news record must be featured.';
+        }
+
+        if ($featuredUpcomingEvents !== 3) {
+            $errors['events'][] = 'Exactly three upcoming event records must be featured.';
         }
 
         return ['files' => $files, 'errors' => $errors];

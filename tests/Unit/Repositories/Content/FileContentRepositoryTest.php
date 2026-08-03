@@ -109,6 +109,128 @@ class FileContentRepositoryTest extends TestCase
         );
     }
 
+    public function test_featured_publications_are_filtered_sorted_and_limited(): void
+    {
+        $this->writeRecord('publications', 'older-featured', [
+            'publication_date' => '2025-03-01',
+            'featured' => true,
+        ]);
+        $this->writeRecord('publications', 'newer-featured', [
+            'publication_date' => '2026-04-01',
+            'featured' => true,
+        ]);
+        $this->writeRecord('publications', 'newest-featured', [
+            'publication_date' => '2026-06-01',
+            'featured' => true,
+        ]);
+        $this->writeRecord('publications', 'excluded-publication', [
+            'publication_date' => '2026-07-01',
+            'featured' => false,
+        ]);
+
+        $repository = new FilePublicationRepository(new FileContentLoader($this->basePath));
+
+        $this->assertSame(
+            ['newest-featured', 'newer-featured'],
+            array_column($repository->featured(2), 'slug'),
+        );
+        $this->assertSame([], $repository->featured(0));
+    }
+
+    public function test_homepage_trending_keeps_featured_first_then_uses_date_and_slug_order(): void
+    {
+        $this->writeRecord('news', 'older-featured', [
+            'published_at' => '2025-01-01T09:00:00+00:00',
+            'featured' => true,
+        ]);
+        $this->writeRecord('news', 'newest-story', [
+            'published_at' => '2026-08-01T09:00:00+00:00',
+            'featured' => false,
+        ]);
+        $this->writeRecord('news', 'beta-tied-story', [
+            'published_at' => '2026-07-01T09:00:00+00:00',
+            'featured' => false,
+        ]);
+        $this->writeRecord('news', 'alpha-tied-story', [
+            'published_at' => '2026-07-01T09:00:00+00:00',
+            'featured' => false,
+        ]);
+        $this->writeRecord('news', 'oldest-story', [
+            'published_at' => '2024-01-01T09:00:00+00:00',
+            'featured' => false,
+        ]);
+
+        $repository = new FileNewsRepository(new FileContentLoader($this->basePath));
+        $records = $repository->homepageTrending();
+
+        $this->assertSame([
+            'older-featured',
+            'newest-story',
+            'alpha-tied-story',
+            'beta-tied-story',
+        ], array_column($records, 'slug'));
+        $this->assertCount(4, array_unique(array_column($records, 'slug')));
+        $this->assertSame(
+            ['older-featured', 'newest-story'],
+            array_column($repository->homepageTrending(2), 'slug'),
+        );
+        $this->assertSame([], $repository->homepageTrending(0));
+    }
+
+    public function test_featured_upcoming_events_filter_sort_and_limit_deterministically(): void
+    {
+        $today = new \DateTimeImmutable('today');
+        $this->writeRecord('events', 'past-featured', [
+            'start_date' => $today->modify('-2 days')->format('Y-m-d'),
+            'end_date' => $today->modify('-1 day')->format('Y-m-d'),
+            'featured' => true,
+        ]);
+        $this->writeRecord('events', 'unfeatured-sooner', [
+            'start_date' => $today->modify('+1 day')->format('Y-m-d'),
+            'end_date' => $today->modify('+1 day')->format('Y-m-d'),
+            'featured' => false,
+        ]);
+        $this->writeRecord('events', 'ending-today-featured', [
+            'start_date' => $today->modify('-1 day')->format('Y-m-d'),
+            'end_date' => $today->format('Y-m-d'),
+            'featured' => true,
+        ]);
+        $this->writeRecord('events', 'first-featured', [
+            'start_date' => $today->modify('+2 days')->format('Y-m-d'),
+            'end_date' => $today->modify('+2 days')->format('Y-m-d'),
+            'featured' => true,
+        ]);
+        $this->writeRecord('events', 'beta-tied-featured', [
+            'start_date' => $today->modify('+4 days')->format('Y-m-d'),
+            'end_date' => $today->modify('+5 days')->format('Y-m-d'),
+            'featured' => true,
+        ]);
+        $this->writeRecord('events', 'alpha-tied-featured', [
+            'start_date' => $today->modify('+4 days')->format('Y-m-d'),
+            'end_date' => $today->modify('+4 days')->format('Y-m-d'),
+            'featured' => true,
+        ]);
+
+        $repository = new FileEventRepository(new FileContentLoader($this->basePath));
+
+        $this->assertSame([
+            'ending-today-featured',
+            'first-featured',
+            'alpha-tied-featured',
+        ], array_column($repository->featuredUpcoming(), 'slug'));
+        $this->assertSame(
+            ['ending-today-featured', 'first-featured'],
+            array_column($repository->featuredUpcoming(2), 'slug'),
+        );
+        $this->assertSame([
+            'ending-today-featured',
+            'first-featured',
+            'alpha-tied-featured',
+            'beta-tied-featured',
+        ], array_column($repository->featuredUpcoming(4), 'slug'));
+        $this->assertSame([], $repository->featuredUpcoming(0));
+    }
+
     public function test_find_exists_and_explicit_slug_behaviour(): void
     {
         $this->writeRecord('research/areas', 'climate-science', [
