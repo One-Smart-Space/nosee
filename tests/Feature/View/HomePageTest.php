@@ -24,8 +24,19 @@ class HomePageTest extends TestCase
             ->assertViewIs('pages.home')
             ->assertViewHas('heroItems')
             ->assertViewHas('monitoringRecords', fn (array $records): bool => count($records) === 3)
+            ->assertViewHas('researchOutputs', fn (array $records): bool => count($records) === 3)
+            ->assertViewHas('trendingArticles', fn (array $records): bool => count($records) === 4)
+            ->assertViewHas('upcomingEvents', fn (array $records): bool => count($records) === 3)
+            ->assertViewMissing('footer')
+            ->assertSee('data-homepage-motion', false)
             ->assertSee('data-home-hero', false)
             ->assertSee('data-monitoring-dashboard-section', false)
+            ->assertSee('data-research-outputs-section', false)
+            ->assertSee('data-trending-news-section', false)
+            ->assertSee('data-upcoming-events-section', false)
+            ->assertSee('data-site-footer', false)
+            ->assertSee('Quick Links')
+            ->assertSee('Privacy Policy')
             ->assertSee('data-transparent="true"', false)
             ->assertDontSee('pt-[4.5rem] lg:pt-16', false);
 
@@ -33,27 +44,49 @@ class HomePageTest extends TestCase
             strpos($html, 'data-monitoring-dashboard-section'),
             strpos($html, 'data-home-hero'),
         );
+        $this->assertLessThan(
+            strpos($html, 'data-research-outputs-section'),
+            strpos($html, 'data-monitoring-dashboard-section'),
+        );
+        $this->assertLessThan(
+            strpos($html, 'data-trending-news-section'),
+            strpos($html, 'data-research-outputs-section'),
+        );
+        $this->assertLessThan(
+            strpos($html, 'data-upcoming-events-section'),
+            strpos($html, 'data-trending-news-section'),
+        );
+        $this->assertLessThan(
+            strpos($html, 'data-site-footer'),
+            strpos($html, 'data-upcoming-events-section'),
+        );
     }
 
     public function test_single_item_hero_is_server_rendered_without_carousel_controls(): void
     {
         $content = require base_path('content/homepage.php');
+        $item = $content['hero']['items'][0];
         $html = Blade::render('<x-home.hero :items="$items" />', [
-            'items' => $content['hero']['items'],
+            'items' => [$item],
         ]);
 
-        $this->assertStringContainsString('Explore NOSEE research and resources', $html);
-        $this->assertStringContainsString('h-[600px]', $html);
+        $this->assertStringContainsString($item['title'], $html);
+        $this->assertStringContainsString('h-[78svh]', $html);
+        $this->assertStringContainsString('shrink-0 overflow-hidden', $html);
         $this->assertStringContainsString('lg:h-[850px]', $html);
+        $this->assertStringContainsString('lg:mt-10', $html);
+        $this->assertStringNotContainsString('lg:top-[159px]', $html);
+        $this->assertStringNotContainsString('lg:bg-default', $html);
         $this->assertStringContainsString('text-[28px]', $html);
-        $this->assertStringContainsString('lg:text-[64px]', $html);
+        $this->assertStringContainsString('lg:text-[56px]', $html);
         $this->assertStringContainsString('object-cover object-center', $html);
         $this->assertStringContainsString('width="1440"', $html);
         $this->assertStringContainsString('height="850"', $html);
         $this->assertStringContainsString('hidden max-w-[294px]', $html);
         $this->assertStringContainsString('lg:block', $html);
-        $this->assertStringContainsString('/media/icons/arrow-right-line.svg', $html);
-        $this->assertStringContainsString('/media/icons/arrow-right-head.svg', $html);
+        $this->assertStringContainsString('/media/icons/arrow-right.svg', $html);
+        $this->assertStringNotContainsString('/media/icons/arrow-right-line.svg', $html);
+        $this->assertStringNotContainsString('/media/icons/arrow-right-head.svg', $html);
         $this->assertStringContainsString('aria-roledescription="carousel"', $html);
         $this->assertStringContainsString('aria-label="Slide 1 of 1"', $html);
         $this->assertStringContainsString('fetchpriority="high"', $html);

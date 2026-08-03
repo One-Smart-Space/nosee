@@ -3,7 +3,7 @@
 @php($itemCount = count($items))
 
 <section
-    class="relative h-[600px] touch-pan-y overflow-hidden bg-primary text-inverse lg:h-[850px]"
+    class="relative h-[78svh] touch-pan-y overflow-hidden bg-primary text-inverse lg:h-[850px]"
     role="region"
     aria-roledescription="carousel"
     aria-label="Featured homepage content"

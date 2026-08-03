@@ -147,6 +147,8 @@ test('the first image is prioritized and later images use native lazy loading', 
     );
 
     assert.match(template, /@if \(\$loop->first\)\s+fetchpriority="high"\s+@else\s+loading="lazy"/);
+    assert.match(template, /h-\[78svh\]/);
+    assert.match(template, /class="relative h-full w-full shrink-0 overflow-hidden"[\s\S]*data-hero-image-slide/);
 });
 
 test('desktop autoplay advances every six seconds and wraps to the first slide', () => {
