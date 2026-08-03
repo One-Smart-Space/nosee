@@ -25,6 +25,7 @@ class MobileNavigationTest extends TestCase
         $this->assertDoesNotMatchRegularExpression('/data-navigation-state="transparent"[^>]*\shidden/', $html);
         $this->assertMatchesRegularExpression('/data-navigation-state="compact"[^>]*\shidden/', $html);
         $this->assertStringContainsString('src="/logoWhite.png"', $html);
+        $this->assertStringNotContainsString('border-b border-white/70', $html);
     }
 
     public function test_drawer_content_and_submenus_are_accessible(): void

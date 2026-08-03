@@ -8,7 +8,7 @@
     <div class="relative z-20 h-[4.5rem] text-inverse">
         <div class="absolute inset-0" data-navigation-state="transparent" @if (! $transparent) hidden @endif>
             <x-ui.container class="h-full">
-                <div class="flex h-full items-center border-b border-white/70">
+                <div class="flex h-full items-center">
                     <a
                         href="/"
                         @if ($homeCurrent) aria-current="page" @endif

@@ -25,6 +25,7 @@ class DesktopNavigationTest extends TestCase
         $this->assertDoesNotMatchRegularExpression('/data-navigation-state="transparent"[^>]*\shidden/', $html);
         $this->assertMatchesRegularExpression('/data-navigation-state="compact"[^>]*\shidden/', $html);
         $this->assertStringContainsString('src="/logoWhite.png"', $html);
+        $this->assertStringNotContainsString('border-b border-white/70', $html);
     }
 
     public function test_navigation_content_and_dropdown_are_accessible(): void
@@ -39,6 +40,7 @@ class DesktopNavigationTest extends TestCase
             $this->assertStringContainsString($label, $html);
         }
 
+        $this->assertStringContainsString('inline-flex h-9 items-center', $html);
         $this->assertStringContainsString('href="/data"', $html);
         $this->assertStringContainsString('href="/products"', $html);
         $this->assertStringContainsString('aria-haspopup="true"', $html);

@@ -6,7 +6,7 @@
 >
     {{-- Full two-tier header used at the top of transparent pages. --}}
     <div data-navigation-state="transparent" @if (! $transparent) hidden @endif>
-        <x-ui.container class="flex h-[10.25rem] items-center border-b border-white/70 text-inverse">
+        <x-ui.container class="flex h-[10.25rem] items-center text-inverse">
             <a
                 href="/"
                 @if ($homeCurrent) aria-current="page" @endif
@@ -36,7 +36,7 @@
                                 href="{{ $item['url'] }}"
                                 @if ($item['current']) aria-current="page" @endif
                                 @class([
-                                    'rounded-sm px-5 py-3 text-base font-medium text-inverse transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
+                                    'inline-flex h-9 items-center rounded-sm px-5 text-base font-medium text-inverse transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
                                     'underline decoration-2 decoration-white underline-offset-4' => $item['active'],
                                 ])
                             >
