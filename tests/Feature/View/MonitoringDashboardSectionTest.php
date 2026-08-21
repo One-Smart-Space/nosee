@@ -27,7 +27,7 @@ class MonitoringDashboardSectionTest extends TestCase
         $this->assertStringContainsString('ALL DATA', $html);
     }
 
-    public function test_section_uses_responsive_css_only_layout_and_expansion(): void
+    public function test_section_uses_responsive_css_only_layout_and_hover_lift(): void
     {
         $records = $this->app->make(DataRepository::class)->homepageMonitoring();
         $html = Blade::render(
@@ -40,10 +40,8 @@ class MonitoringDashboardSectionTest extends TestCase
         $this->assertStringContainsString('flex-col gap-4 lg:flex-row', $html);
         $this->assertStringContainsString('lg:gap-8', $html);
         $this->assertStringContainsString('lg:flex-1', $html);
-        $this->assertStringContainsString('lg:hover:grow-[1.5]', $html);
-        $this->assertStringContainsString('lg:focus-within:grow-[1.5]', $html);
-        $this->assertStringContainsString('lg:duration-300', $html);
-        $this->assertStringContainsString('motion-reduce:transition-none', $html);
+        $this->assertStringNotContainsString('grow-[1.5]', $html);
+        $this->assertSame(3, substr_count($html, 'card-hover-lift'));
         $this->assertStringNotContainsString('<script', $html);
     }
 }

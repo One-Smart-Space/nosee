@@ -17,10 +17,10 @@ class EventCardTest extends TestCase
         $this->assertStringContainsString('10.03.2027 - 12.03.2027', $html);
         $this->assertStringContainsString($event['title'], $html);
         $this->assertStringContainsString($event['summary'], $html);
-        $this->assertStringContainsString('Abuja, Nigeria', $html);
+        $this->assertStringContainsString('Development Conference Centre, Abuja, Nigeria', $html);
         $this->assertStringContainsString('href="/events/regional-space-weather-conference"', $html);
         $this->assertStringContainsString('aria-label="View event: '.$event['title'].'"', $html);
-        $this->assertSame(1, substr_count($html, '<a '));
+        $this->assertSame(1, preg_match_all('/<a(?:\s|>)/', $html));
         $this->assertStringNotContainsString('<button', $html);
     }
 
@@ -32,18 +32,22 @@ class EventCardTest extends TestCase
         $this->assertStringNotContainsString('14.05.2027 - 14.05.2027', $html);
     }
 
-    public function test_desktop_raises_on_hover_and_focus_while_mobile_stays_static(): void
+    public function test_card_uses_the_shared_hover_lift(): void
     {
         $html = $this->render($this->event('regional-space-weather-conference'));
 
-        $this->assertStringContainsString('lg:hover:-translate-y-1', $html);
-        $this->assertStringContainsString('lg:focus-within:-translate-y-1', $html);
-        $this->assertStringContainsString('lg:hover:shadow-md', $html);
-        $this->assertStringContainsString('duration-300', $html);
-        $this->assertStringContainsString('motion-reduce:transition-none', $html);
-        $this->assertStringContainsString('motion-reduce:hover:translate-y-0', $html);
+        $this->assertStringContainsString('card-hover-lift', $html);
         $this->assertStringContainsString('w-full', $html);
-        $this->assertStringNotContainsString(' group-hover:-translate-y-1', $html);
+    }
+
+    public function test_meeting_card_links_to_its_external_site(): void
+    {
+        $event = $this->event('icelli2026');
+        $html = $this->render($event);
+
+        $this->assertStringContainsString('href="https://icelli.nosee.org"', $html);
+        $this->assertStringNotContainsString('href="/events/icelli2026"', $html);
+        $this->assertStringContainsString('Development Meeting Centre, Kano, Nigeria + Zoom', $html);
     }
 
     /** @return array<string, mixed> */

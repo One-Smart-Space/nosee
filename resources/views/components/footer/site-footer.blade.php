@@ -114,7 +114,7 @@
                         placeholder="{{ $newsletter['placeholder'] }}"
                         @disabled(! $newsletterEnabled)
                         @if ($newsletterEnabled) data-newsletter-email @endif
-                        class="h-12 min-w-0 flex-1 bg-default px-4 text-primary outline-none placeholder:text-secondary focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent disabled:bg-surface disabled:text-disabled disabled:placeholder:text-disabled"
+                        class="h-12 min-w-0 flex-1 bg-default px-4 text-primary outline-none placeholder:text-secondary disabled:bg-surface disabled:text-disabled disabled:placeholder:text-disabled"
                     >
                     <x-ui.button
                         type="submit"
@@ -223,7 +223,7 @@
     {{-- Confirm successful subscriptions in a native modal with built-in keyboard semantics. --}}
     @if ($newsletterEnabled)
         <dialog
-            class="w-[calc(100%-2rem)] max-w-md rounded-md bg-default p-0 text-primary shadow-2xl backdrop:bg-black/70"
+            class="m-auto w-[calc(100%-2rem)] max-w-md rounded-md bg-default p-0 text-primary shadow-2xl backdrop:bg-black/70"
             aria-labelledby="newsletter-confirmation-title"
             aria-describedby="newsletter-confirmation-message"
             data-newsletter-dialog

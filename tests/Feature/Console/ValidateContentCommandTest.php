@@ -51,7 +51,7 @@ class ValidateContentCommandTest extends TestCase
     public function test_command_returns_success_for_valid_fixtures(): void
     {
         $this->artisan('content:validate')
-            ->expectsOutput('Content validation passed: 41 files validated.')
+            ->expectsOutput('Content validation passed: 40 files validated.')
             ->assertExitCode(0);
     }
 
@@ -100,6 +100,15 @@ class ValidateContentCommandTest extends TestCase
 
         $this->artisan('content:validate')
             ->expectsOutputToContain('Exactly three upcoming event records must be featured.')
+            ->assertExitCode(1);
+    }
+
+    public function test_command_requires_exactly_nine_event_records(): void
+    {
+        unlink($this->path('events/ionospheric-methods-seminar.php'));
+
+        $this->artisan('content:validate')
+            ->expectsOutputToContain('Exactly nine event records are required.')
             ->assertExitCode(1);
     }
 

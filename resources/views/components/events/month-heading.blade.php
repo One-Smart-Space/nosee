@@ -1,0 +1,9 @@
+@props(['label'])
+
+<header
+    {{ $attributes->class('events-month-heading sticky top-[var(--compact-navbar-offset)] z-20 border-b border-line-soft bg-default py-4 lg:pt-6') }}
+>
+    <h3 class="font-heading text-[28px] leading-8 font-medium text-primary lg:text-[32px] lg:leading-9">
+        {{ $label }}
+    </h3>
+</header>

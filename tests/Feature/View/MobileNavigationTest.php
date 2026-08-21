@@ -12,9 +12,9 @@ class MobileNavigationTest extends TestCase
         $html = Blade::render('<x-navigation.mobile-navigation transparent="false" />');
 
         $this->assertStringContainsString('data-transparent="false"', $html);
-        $this->assertMatchesRegularExpression('/data-navigation-state="transparent"\s+hidden/', $html);
-        $this->assertDoesNotMatchRegularExpression('/data-navigation-state="compact"[^>]*\shidden/', $html);
-        $this->assertStringContainsString('src="/logo.png"', $html);
+        $this->assertStringContainsString('data-navigation-mode="compact"', $html);
+        $this->assertStringContainsString('data-navigation-expanded-only', $html);
+        $this->assertStringContainsString('inert', $html);
     }
 
     public function test_transparent_navigation_is_the_initial_transparent_state(): void
@@ -22,9 +22,13 @@ class MobileNavigationTest extends TestCase
         $html = Blade::render('<x-navigation.mobile-navigation transparent="true" />');
 
         $this->assertStringContainsString('data-transparent="true"', $html);
-        $this->assertDoesNotMatchRegularExpression('/data-navigation-state="transparent"[^>]*\shidden/', $html);
-        $this->assertMatchesRegularExpression('/data-navigation-state="compact"[^>]*\shidden/', $html);
+        $this->assertStringContainsString('data-navigation-mode="expanded"', $html);
+        $this->assertDoesNotMatchRegularExpression('/data-navigation-expanded-only[^>]*\sinert/', $html);
         $this->assertStringContainsString('src="/logoWhite.png"', $html);
+        $this->assertStringContainsString('bg-brand', $html);
+        $this->assertStringContainsString('bg-black/70', $html);
+        $this->assertStringContainsString('!bg-white !text-brand', $html);
+        $this->assertStringContainsString('mx-auto h-auto w-full', $html);
         $this->assertStringNotContainsString('border-b border-white/70', $html);
     }
 
@@ -39,18 +43,23 @@ class MobileNavigationTest extends TestCase
         $this->assertStringContainsString('overflow-y-auto', $html);
         $this->assertSame(3, substr_count($html, 'aria-label="Toggle '));
 
-        foreach (['About NSEE', 'Research', 'Data &amp; Products', 'Meetings', 'Publications', 'Outreach'] as $label) {
+        foreach (['About NSEE', 'Research', 'Data &amp; Products', 'Events', 'Publications', 'Outreach'] as $label) {
             $this->assertStringContainsString($label, $html);
         }
 
-        foreach (['News', 'Events', 'Multimedia', 'Support NSEE'] as $label) {
+        foreach (['News', 'Multimedia', 'Support NOSEE', 'Login'] as $label) {
             $this->assertStringContainsString($label, $html);
         }
+
+        $this->assertStringNotContainsString('Meetings', $html);
+        $this->assertSame(1, substr_count($html, 'href="/events"'));
 
         $this->assertStringContainsString('href="/data"', $html);
         $this->assertStringContainsString('href="/products"', $html);
-        $this->assertStringNotContainsString('Login', $html);
-        $this->assertStringNotContainsString('profile', strtolower($html));
+        $this->assertStringContainsString('href="/login"', $html);
+        $this->assertSame(1, substr_count($html, 'href="/login"'));
+        $this->assertStringContainsString('aria-label="Login"', $html);
+        $this->assertStringContainsString('h-8 w-px shrink-0 bg-white', $html);
     }
 
     public function test_layout_passes_one_transparent_value_to_both_navigation_components(): void

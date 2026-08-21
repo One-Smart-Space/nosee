@@ -19,12 +19,11 @@ final class FileEventRepository extends AbstractFileContentRepository implements
         $records = array_values(array_filter(
             $this->all(),
             static fn (array $record): bool => ($record['featured'] ?? false) === true
-                && ($record['end_date'] ?? '') >= $today,
+                && ($record['end_date'] ?? $record['start_date'] ?? '') >= $today,
         ));
 
         // Start date drives the listing; slugs keep equal dates deterministic.
-        usort($records, static fn (array $left, array $right): int =>
-            strcmp((string) $left['start_date'], (string) $right['start_date'])
+        usort($records, static fn (array $left, array $right): int => strcmp((string) $left['start_date'], (string) $right['start_date'])
             ?: strcmp((string) $left['slug'], (string) $right['slug'])
         );
 

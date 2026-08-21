@@ -1,34 +1,36 @@
-@import '@fontsource/ubuntu-sans/latin-400.css';
-@import '@fontsource/ubuntu-sans/latin-500.css';
-@import '@fontsource/ubuntu-sans/latin-600.css';
-@import '@fontsource/ubuntu-sans/latin-700.css';
-@import '@fontsource/ibm-plex-sans/latin-400.css';
-@import '@fontsource/ibm-plex-sans/latin-400-italic.css';
-@import '@fontsource/ibm-plex-sans/latin-500.css';
-@import '@fontsource/ibm-plex-sans/latin-600.css';
-@import '@fontsource/ibm-plex-sans/latin-700.css';
-@import 'tailwindcss';
+@import "@fontsource/ubuntu-sans/latin-400.css";
+@import "@fontsource/ubuntu-sans/latin-500.css";
+@import "@fontsource/ubuntu-sans/latin-600.css";
+@import "@fontsource/ubuntu-sans/latin-700.css";
+@import "@fontsource/ibm-plex-sans/latin-400.css";
+@import "@fontsource/ibm-plex-sans/latin-400-italic.css";
+@import "@fontsource/ibm-plex-sans/latin-500.css";
+@import "@fontsource/ibm-plex-sans/latin-600.css";
+@import "@fontsource/ibm-plex-sans/latin-700.css";
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    --color-brand: #13853D;
-    --color-accent: #1E4EC4;
+    --color-brand: #13853d;
+    --color-accent: #1e4ec4;
     --color-primary: #171717;
-    --color-secondary: #5C5C5C;
-    --color-tertiary: #A3A3A3;
-    --color-disabled: #D1D1D1;
-    --color-inverse: #FFFFFF;
-    --color-default: #FFFFFF;
-    --color-surface: #F7F7F7;
+    --color-secondary: #5c5c5c;
+    --color-tertiary: #a3a3a3;
+    --color-disabled: #d1d1d1;
+    --color-inverse: #ffffff;
+    --color-default: #ffffff;
+    --color-surface: #f7f7f7;
     --color-line-soft: rgb(0 0 0 / 0.05);
-    --color-line-mild: rgb(0 0 0 / 0.10);
-    --color-line-strong: rgb(0 0 0 / 0.20);
-    --font-heading: 'Ubuntu Sans', ui-sans-serif, system-ui, sans-serif;
-    --font-body: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --color-line-mild: rgb(0 0 0 / 0.1);
+    --color-line-strong: rgb(0 0 0 / 0.2);
+    --font-heading: "Ubuntu Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-sans:
+        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
 }
 
 @layer base {
@@ -58,5 +60,25 @@
 
     button:enabled {
         cursor: pointer;
+    }
+}
+
+@layer components {
+    .card-hover-lift {
+        @apply transition-all duration-250 motion-reduce:transition-none;
+    }
+
+    @media (min-width: 64rem) {
+        .card-hover-lift:hover,
+        .card-hover-lift:focus-within {
+            @apply -translate-y-1 shadow-lg shadow-black/10;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .card-hover-lift:hover,
+        .card-hover-lift:focus-within {
+            @apply translate-y-0;
+        }
     }
 }

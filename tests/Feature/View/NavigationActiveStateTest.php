@@ -60,8 +60,8 @@ class NavigationActiveStateTest extends TestCase
 
         $this->assertSame($desktop->primary, $mobile->primary);
         $this->assertSame($desktop->utility, $mobile->utility);
-        $this->assertTrue($desktop->utility[1]['active']);
-        $this->assertFalse($desktop->utility[1]['current']);
+        $this->assertTrue($desktop->primary[3]['active']);
+        $this->assertFalse($desktop->primary[3]['current']);
     }
 
     public function test_aria_current_is_only_applied_to_the_matching_link(): void

@@ -6,7 +6,6 @@ namespace Tests\Unit\Repositories\Content;
 
 use App\Contracts\Content\DataRepository;
 use App\Contracts\Content\EventRepository;
-use App\Contracts\Content\MeetingRepository;
 use App\Contracts\Content\NewsRepository;
 use App\Contracts\Content\OutreachRepository;
 use App\Contracts\Content\ProductRepository;
@@ -17,7 +16,6 @@ use App\Exceptions\InvalidContentFileException;
 use App\Exceptions\InvalidContentPathException;
 use App\Repositories\Content\FileDataRepository;
 use App\Repositories\Content\FileEventRepository;
-use App\Repositories\Content\FileMeetingRepository;
 use App\Repositories\Content\FileNewsRepository;
 use App\Repositories\Content\FileOutreachRepository;
 use App\Repositories\Content\FileProductRepository;
@@ -344,7 +342,6 @@ class FileContentRepositoryTest extends TestCase
             FileResearchRepository::class => 'research/areas',
             FileDataRepository::class => 'data/items',
             FileProductRepository::class => 'products/items',
-            FileMeetingRepository::class => 'meetings',
             FilePublicationRepository::class => 'publications',
             FileEventRepository::class => 'events',
             FileNewsRepository::class => 'news',
@@ -376,7 +373,6 @@ class FileContentRepositoryTest extends TestCase
             ResearchRepository::class => FileResearchRepository::class,
             DataRepository::class => FileDataRepository::class,
             ProductRepository::class => FileProductRepository::class,
-            MeetingRepository::class => FileMeetingRepository::class,
             PublicationRepository::class => FilePublicationRepository::class,
             EventRepository::class => FileEventRepository::class,
             NewsRepository::class => FileNewsRepository::class,
@@ -386,6 +382,8 @@ class FileContentRepositoryTest extends TestCase
         foreach ($bindings as $contract => $repository) {
             $this->assertInstanceOf($repository, $this->app->make($contract));
         }
+
+        $this->assertFalse($this->app->bound('App\\Contracts\\Content\\MeetingRepository'));
     }
 
     public function test_default_loader_uses_the_project_content_directory(): void

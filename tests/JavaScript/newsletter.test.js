@@ -149,6 +149,7 @@ test('footer markup contains the requested confirmation and native dialog', () =
     );
 
     assert.match(template, /<dialog[\s\S]*data-newsletter-dialog/);
+    assert.match(template, /<dialog[\s\S]*class="[^"]*m-auto/);
     assert.match(template, /Thank you for subscribing! Look out for NOSEE's newletter in your mailbox/);
     assert.match(template, /data-newsletter-dismiss/);
 });

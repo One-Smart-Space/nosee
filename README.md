@@ -209,7 +209,6 @@ Collections keep one record per file:
 - `content/research/areas/`
 - `content/data/items/`
 - `content/products/items/`
-- `content/meetings/`
 - `content/publications/`
 - `content/events/`
 - `content/news/`

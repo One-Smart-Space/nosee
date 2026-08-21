@@ -17,10 +17,10 @@
                 EARTH-SPACE ENVIRONMENT MONITORING DASHBOARD
             </h2>
 
-            {{-- Stack cards on mobile and let hover or contained focus expand them on desktop. --}}
+            {{-- Stack cards on mobile and keep equal widths while lifting interactions on desktop. --}}
             <div class="flex w-full flex-col gap-4 lg:flex-row lg:items-start lg:gap-8" data-monitoring-dashboard-cards data-reveal-group>
                 @foreach ($records as $record)
-                    <div class="w-full lg:min-w-0 lg:flex-1 lg:transition-[flex-grow] lg:duration-300 lg:ease-in-out lg:hover:grow-[1.5] lg:focus-within:grow-[1.5] motion-reduce:transition-none">
+                    <div class="card-hover-lift w-full lg:min-w-0 lg:flex-1">
                         <div class="h-full" data-reveal-item>
                             <x-cards.monitoring-dashboard-card :record="$record" class="h-full w-full" />
                         </div>
