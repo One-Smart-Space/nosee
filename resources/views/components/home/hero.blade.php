@@ -3,7 +3,7 @@
 @php($itemCount = count($items))
 
 <section
-    class="relative h-[78svh] touch-pan-y overflow-hidden bg-primary text-inverse lg:h-[850px]"
+    class="relative h-[750px] touch-pan-y overflow-hidden bg-primary text-inverse lg:h-[850px]"
     role="region"
     aria-roledescription="carousel"
     aria-label="Featured homepage content"
@@ -65,7 +65,7 @@
                 data-hero-content-slide
                 data-slide-id="{{ $item['id'] }}"
             >
-                <div class="absolute top-1/2 right-4 left-4 flex -translate-y-1/2 flex-col items-start gap-5 lg:right-auto lg:left-[120px] lg:mt-10 lg:w-[852px] lg:gap-0">
+                <div class="absolute top-1/2 mt-20 right-4 left-4 flex -translate-y-1/2 flex-col items-start gap-5 lg:right-auto lg:left-[120px] lg:mt-10 lg:w-[852px] lg:gap-0">
                     <p
                         class="rounded-[2px] bg-white/40 px-2.5 py-1.5 text-xs leading-4 text-primary uppercase"
                         @if ($loop->first) data-hero-entrance-eyebrow @endif

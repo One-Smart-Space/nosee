@@ -254,6 +254,10 @@ test('reveal markup uses neutral wrappers and preserves existing interactions', 
         new URL('../../resources/views/components/cards/event-card.blade.php', import.meta.url),
         'utf8',
     );
+    const stylesheet = readFileSync(
+        new URL('../../resources/css/app.css', import.meta.url),
+        'utf8',
+    );
     const hero = readFileSync(
         new URL('../../resources/views/components/home/hero.blade.php', import.meta.url),
         'utf8',
@@ -271,10 +275,13 @@ test('reveal markup uses neutral wrappers and preserves existing interactions', 
         assert.match(template, /<div[^>]*data-reveal-item/);
         assert.doesNotMatch(template, /<x-(?:cards|ui)\.[^>]*data-reveal-(?:item|actions)/);
     });
-    assert.match(templates[0], /lg:hover:grow-\[1\.5\]/);
-    assert.match(templates[0], /lg:focus-within:grow-\[1\.5\]/);
-    assert.match(eventCard, /lg:hover:-translate-y-1/);
-    assert.match(eventCard, /lg:focus-within:-translate-y-1/);
+    assert.doesNotMatch(templates[0], /grow-\[1\.5\]/);
+    assert.match(templates[0], /card-hover-lift/);
+    assert.match(eventCard, /card-hover-lift/);
+    assert.match(stylesheet, /\.card-hover-lift:hover/);
+    assert.match(stylesheet, /-translate-y-1 shadow-lg shadow-black\/10/);
+    assert.match(stylesheet, /duration-250 motion-reduce:transition-none/);
+    assert.match(stylesheet, /prefers-reduced-motion:[^)]+\)[\s\S]+translate-y-0/);
     assert.doesNotMatch(module, /addEventListener\(['"]scroll/);
     assert.doesNotMatch(hero, /data-reveal-/);
     assert.doesNotMatch(footer, /data-reveal-/);

@@ -71,7 +71,7 @@ Controllers must not read files directly. File access belongs in repositories, w
 
 ## Content repository foundation
 
-`ContentRepository` defines the shared `all`, `find`, `exists`, and `findOrFail` operations. The domain contracts `ResearchRepository`, `DataRepository`, `ProductRepository`, `MeetingRepository`, `PublicationRepository`, `EventRepository`, `NewsRepository`, and `OutreachRepository` extend it without adding domain-specific methods.
+`ContentRepository` defines the shared `all`, `find`, `exists`, and `findOrFail` operations. The domain contracts `ResearchRepository`, `DataRepository`, `ProductRepository`, `PublicationRepository`, `EventRepository`, `NewsRepository`, and `OutreachRepository` extend it with domain-specific queries only where needed.
 
 `FileContentLoader` is the only class that reads structured PHP content files. It validates collection paths and slugs, restricts access to the configured content root, requires records to return arrays, and loads collections in filename order. A valid but missing collection is treated as empty; malformed files and invalid paths raise application-specific exceptions.
 
@@ -82,7 +82,6 @@ Controllers must not read files directly. File access belongs in repositories, w
 | `ResearchRepository` | `FileResearchRepository` | `research/areas` |
 | `DataRepository` | `FileDataRepository` | `data/items` |
 | `ProductRepository` | `FileProductRepository` | `products/items` |
-| `MeetingRepository` | `FileMeetingRepository` | `meetings` |
 | `PublicationRepository` | `FilePublicationRepository` | `publications` |
 | `EventRepository` | `FileEventRepository` | `events` |
 | `NewsRepository` | `FileNewsRepository` | `news` |

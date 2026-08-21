@@ -7,14 +7,33 @@ use Tests\TestCase;
 
 class DesktopNavigationTest extends TestCase
 {
+    public function test_navigation_configuration_promotes_events_and_preserves_utility_order(): void
+    {
+        $navigation = require base_path('content/navigation.php');
+
+        $this->assertSame(
+            ['About NSEE', 'Research', 'Data & Products', 'Events', 'Publications', 'Outreach'],
+            array_column($navigation['primary'], 'label'),
+        );
+        $this->assertSame('/events', $navigation['primary'][3]['url']);
+        $this->assertSame(
+            ['News', 'Multimedia', 'Support NOSEE', 'Login'],
+            array_column($navigation['utility'], 'label'),
+        );
+    }
+
     public function test_compact_navigation_is_the_default_state(): void
     {
         $html = Blade::render('<x-navigation.desktop-navigation transparent="false" />');
 
         $this->assertStringContainsString('data-transparent="false"', $html);
-        $this->assertMatchesRegularExpression('/data-navigation-state="transparent"\s+hidden/', $html);
-        $this->assertDoesNotMatchRegularExpression('/data-navigation-state="compact"[^>]*\shidden/', $html);
-        $this->assertStringContainsString('src="/logo.png"', $html);
+        $this->assertStringContainsString('data-navigation-mode="compact"', $html);
+        $this->assertStringNotContainsString('data-navigation-expanded-only', $html);
+        $this->assertStringNotContainsString('inert', $html);
+        $this->assertStringContainsString('src="/logoWhite.png"', $html);
+        $this->assertStringContainsString('bg-black/70', $html);
+        $this->assertStringContainsString('group-data-[navigation-mode=compact]/navigation:h-12', $html);
+        $this->assertStringContainsString('group-data-[navigation-mode=compact]/navigation:h-14', $html);
     }
 
     public function test_transparent_navigation_is_the_initial_transparent_state(): void
@@ -22,8 +41,7 @@ class DesktopNavigationTest extends TestCase
         $html = Blade::render('<x-navigation.desktop-navigation transparent="true" />');
 
         $this->assertStringContainsString('data-transparent="true"', $html);
-        $this->assertDoesNotMatchRegularExpression('/data-navigation-state="transparent"[^>]*\shidden/', $html);
-        $this->assertMatchesRegularExpression('/data-navigation-state="compact"[^>]*\shidden/', $html);
+        $this->assertStringContainsString('data-navigation-mode="expanded"', $html);
         $this->assertStringContainsString('src="/logoWhite.png"', $html);
         $this->assertStringNotContainsString('border-b border-white/70', $html);
     }
@@ -32,13 +50,16 @@ class DesktopNavigationTest extends TestCase
     {
         $html = Blade::render('<x-navigation.desktop-navigation transparent="true" />');
 
-        foreach (['About NSEE', 'Research', 'Data &amp; Products', 'Meetings', 'Publications', 'Outreach'] as $label) {
+        foreach (['About NSEE', 'Research', 'Data &amp; Products', 'Events', 'Publications', 'Outreach'] as $label) {
             $this->assertStringContainsString($label, $html);
         }
 
-        foreach (['News', 'Events', 'Multimedia', 'Support NSEE'] as $label) {
+        foreach (['News', 'Multimedia', 'Support NOSEE', 'Login'] as $label) {
             $this->assertStringContainsString($label, $html);
         }
+
+        $this->assertStringNotContainsString('Meetings', $html);
+        $this->assertSame(1, substr_count($html, 'href="/events"'));
 
         $this->assertStringContainsString('inline-flex h-9 items-center', $html);
         $this->assertStringContainsString('href="/data"', $html);
@@ -46,7 +67,14 @@ class DesktopNavigationTest extends TestCase
         $this->assertStringContainsString('aria-haspopup="true"', $html);
         $this->assertStringContainsString('group-hover:visible', $html);
         $this->assertStringContainsString('group-focus-within:visible', $html);
-        $this->assertStringNotContainsString('Login', $html);
-        $this->assertStringNotContainsString('profile', strtolower($html));
+        $this->assertStringContainsString('href="/login"', $html);
+        $this->assertSame(1, substr_count($html, 'href="/login"'));
+        $this->assertStringContainsString('aria-label="Login"', $html);
+        $this->assertStringContainsString('h-8 w-px shrink-0 bg-white', $html);
+    }
+
+    public function test_meetings_is_not_an_active_public_destination(): void
+    {
+        $this->get('/meetings')->assertNotFound();
     }
 }

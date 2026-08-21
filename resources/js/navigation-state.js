@@ -1,20 +1,21 @@
 export const shouldUseTransparentNavigation = (transparent, scrollY) => transparent && scrollY <= 24;
 
 export function initializeNavigationStates(navigations, windowObject = window) {
-    // Cache both visual states so desktop and mobile navigation share one scroll update.
+    // Cache both navigation variants so one scroll listener keeps them synchronized.
     const states = [...navigations].map((navigation) => ({
+        navigation,
         transparent: navigation.dataset.transparent === 'true',
-        transparentState: navigation.querySelector('[data-navigation-state="transparent"]'),
-        compactState: navigation.querySelector('[data-navigation-state="compact"]'),
+        expandedOnly: [...navigation.querySelectorAll('[data-navigation-expanded-only]')],
     }));
 
-    // Show the transparent header only when the page allows it and remains near the top.
     const update = () => {
         states.forEach((state) => {
-            const showTransparent = shouldUseTransparentNavigation(state.transparent, windowObject.scrollY);
+            const expanded = shouldUseTransparentNavigation(state.transparent, windowObject.scrollY);
 
-            state.transparentState.hidden = !showTransparent;
-            state.compactState.hidden = showTransparent;
+            state.navigation.dataset.navigationMode = expanded ? 'expanded' : 'compact';
+            state.expandedOnly.forEach((element) => {
+                element.inert = !expanded;
+            });
         });
     };
 

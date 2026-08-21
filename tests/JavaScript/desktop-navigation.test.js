@@ -6,7 +6,7 @@ import {
     shouldUseTransparentNavigation,
 } from '../../resources/js/navigation-state.js';
 
-test('transparent navigation switches after 24 pixels', () => {
+test('expanded navigation switches after 24 pixels', () => {
     assert.equal(shouldUseTransparentNavigation(false, 0), false);
     assert.equal(shouldUseTransparentNavigation(true, 0), true);
     assert.equal(shouldUseTransparentNavigation(true, 24), true);
@@ -14,15 +14,12 @@ test('transparent navigation switches after 24 pixels', () => {
 });
 
 test('one scroll listener keeps desktop and mobile states synchronized', () => {
-    const pairs = Array.from({ length: 2 }, () => ({
-        transparentState: { hidden: true },
-        compactState: { hidden: false },
-    }));
     let scrollListener;
     let listenerCount = 0;
-    const navigations = pairs.map((pair) => ({
-        dataset: { transparent: 'true' },
-        querySelector: (selector) => selector.includes('transparent') ? pair.transparentState : pair.compactState,
+    const expandedOnly = [[], [{ inert: true }]];
+    const navigations = expandedOnly.map((elements) => ({
+        dataset: { transparent: 'true', navigationMode: 'compact' },
+        querySelectorAll: () => elements,
     }));
     const windowObject = {
         scrollY: 0,
@@ -35,32 +32,30 @@ test('one scroll listener keeps desktop and mobile states synchronized', () => {
 
     initializeNavigationStates(navigations, windowObject);
     assert.equal(listenerCount, 1);
-    pairs.forEach(({ transparentState, compactState }) => {
-        assert.equal(transparentState.hidden, false);
-        assert.equal(compactState.hidden, true);
+    navigations.forEach((navigation) => {
+        assert.equal(navigation.dataset.navigationMode, 'expanded');
     });
+    assert.equal(expandedOnly[1][0].inert, false);
 
     windowObject.scrollY = 25;
     scrollListener();
-    pairs.forEach(({ transparentState, compactState }) => {
-        assert.equal(transparentState.hidden, true);
-        assert.equal(compactState.hidden, false);
+    navigations.forEach((navigation) => {
+        assert.equal(navigation.dataset.navigationMode, 'compact');
     });
+    assert.equal(expandedOnly[1][0].inert, true);
 
     windowObject.scrollY = 0;
     scrollListener();
-    pairs.forEach(({ transparentState, compactState }) => {
-        assert.equal(transparentState.hidden, false);
-        assert.equal(compactState.hidden, true);
+    navigations.forEach((navigation) => {
+        assert.equal(navigation.dataset.navigationMode, 'expanded');
     });
+    assert.equal(expandedOnly[1][0].inert, false);
 });
 
-test('non-transparent navigation starts compact', () => {
-    const transparentState = { hidden: false };
-    const compactState = { hidden: true };
+test('non-transparent desktop navigation starts compact', () => {
     const navigation = {
-        dataset: { transparent: 'false' },
-        querySelector: (selector) => selector.includes('transparent') ? transparentState : compactState,
+        dataset: { transparent: 'false', navigationMode: 'expanded' },
+        querySelectorAll: () => [],
     };
     const windowObject = {
         scrollY: 0,
@@ -68,6 +63,5 @@ test('non-transparent navigation starts compact', () => {
     };
 
     initializeNavigationStates([navigation], windowObject);
-    assert.equal(transparentState.hidden, true);
-    assert.equal(compactState.hidden, false);
+    assert.equal(navigation.dataset.navigationMode, 'compact');
 });

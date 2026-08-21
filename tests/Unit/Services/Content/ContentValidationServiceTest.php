@@ -15,7 +15,7 @@ class ContentValidationServiceTest extends TestCase
         $result = $this->validation()->validateAll();
 
         $this->assertSame([], $result['errors']);
-        $this->assertSame(41, $result['files']);
+        $this->assertSame(40, $result['files']);
     }
 
     public function test_missing_required_field_fails(): void
@@ -99,36 +99,6 @@ class ContentValidationServiceTest extends TestCase
         );
     }
 
-    public function test_invalid_date_fails(): void
-    {
-        $record = $this->meetingRecord();
-        $record['start_date'] = '2026-02-31';
-
-        $this->assertErrorContains(
-            $this->validation()->validateRecord(
-                ContentSchemaRegistry::MEETING,
-                $record,
-                'starter-meeting',
-            ),
-            'start date',
-        );
-    }
-
-    public function test_end_date_before_start_date_fails(): void
-    {
-        $record = $this->meetingRecord();
-        $record['end_date'] = '2026-05-31';
-
-        $this->assertErrorContains(
-            $this->validation()->validateRecord(
-                ContentSchemaRegistry::MEETING,
-                $record,
-                'starter-meeting',
-            ),
-            'end date',
-        );
-    }
-
     public function test_empty_publication_authors_fail(): void
     {
         $record = require base_path('content/publications/low-latitude-geomagnetic-storm-responses.php');
@@ -169,21 +139,6 @@ class ContentValidationServiceTest extends TestCase
             'title' => 'Climate Science',
             'summary' => 'Starter summary.',
             'featured' => false,
-        ];
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    private function meetingRecord(): array
-    {
-        return [
-            'slug' => 'starter-meeting',
-            'title' => 'Starter Meeting',
-            'type' => 'workshop',
-            'start_date' => '2026-06-01',
-            'end_date' => '2026-06-01',
-            'venue' => 'To be confirmed',
         ];
     }
 

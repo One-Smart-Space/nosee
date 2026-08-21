@@ -3,23 +3,35 @@
 {{-- Format the validated event fields for the compact card presentation. --}}
 @php
     $startDate = (new \DateTimeImmutable($event['start_date']))->format('d.m.Y');
-    $endDate = (new \DateTimeImmutable($event['end_date']))->format('d.m.Y');
+    $endDate = isset($event['end_date'])
+        ? (new \DateTimeImmutable($event['end_date']))->format('d.m.Y')
+        : $startDate;
     $dateLabel = $startDate === $endDate ? $startDate : "{$startDate} - {$endDate}";
     $typeLabel = str($event['type'])->replace('-', ' ')->upper();
+    $href = $event['type'] === 'meeting'
+        ? $event['meeting_site_url']
+        : "/events/{$event['slug']}";
+    $physicalLocation = implode(', ', array_filter([
+        $event['location']['venue'],
+        $event['location']['city'],
+        $event['location']['country'],
+    ]));
+    $locationLabel = match ($event['location']['type']) {
+        'online' => $event['location']['platform'],
+        'hybrid' => "{$physicalLocation} + {$event['location']['platform']}",
+        default => $physicalLocation,
+    };
 @endphp
 
 <article
     {{ $attributes->class([
-        'h-full w-full border border-line-soft bg-default',
-        'transition-[transform,box-shadow] duration-300',
-        'lg:hover:-translate-y-1 lg:hover:shadow-md lg:focus-within:-translate-y-1 lg:focus-within:shadow-md',
-        'motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:focus-within:translate-y-0',
+        'card-hover-lift h-full w-full border border-line-soft bg-default',
     ]) }}
     data-event-card
 >
     {{-- Keep every card detail inside one semantic destination link. --}}
     <a
-        href="/events/{{ $event['slug'] }}"
+        href="{{ $href }}"
         aria-label="View event: {{ $event['title'] }}"
         class="flex h-full min-h-[420px] flex-col p-5 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent md:p-6 lg:min-h-[480px] lg:p-8"
     >
@@ -49,7 +61,7 @@
                 {{ $dateLabel }}
             </time>
             <p class="text-sm leading-5 text-primary lg:text-base lg:leading-6">
-                {{ $event['venue'] }}
+                {{ $locationLabel }}
             </p>
         </footer>
     </a>

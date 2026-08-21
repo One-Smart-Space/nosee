@@ -37,8 +37,7 @@ class UpcomingEventsSectionTest extends TestCase
         $this->assertStringContainsString('lg:text-5xl lg:leading-[56px]', $html);
         $this->assertStringContainsString('grid grid-cols-1 items-stretch gap-5 lg:grid-cols-3 lg:gap-8', $html);
         $this->assertStringContainsString('h-full w-full', $html);
-        $this->assertStringContainsString('lg:hover:-translate-y-1', $html);
-        $this->assertStringContainsString('lg:focus-within:-translate-y-1', $html);
+        $this->assertStringContainsString('card-hover-lift', $html);
         $this->assertStringContainsString('hidden lg:block', $html);
         $this->assertStringContainsString('flex justify-center lg:hidden', $html);
         $this->assertStringNotContainsString('<script', $html);

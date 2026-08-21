@@ -13,12 +13,10 @@ final class ContentSchemaRegistry
     private const EVENT_TYPES = [
         'conference',
         'workshop',
-        'seminar',
         'lecture',
         'training',
         'meeting',
         'outreach',
-        'deadline',
     ];
 
     private const NEWS_CATEGORIES = [
@@ -54,8 +52,6 @@ final class ContentSchemaRegistry
     public const EVENT = 'event';
 
     public const HOMEPAGE = 'homepage';
-
-    public const MEETING = 'meeting';
 
     public const NAVIGATION = 'navigation';
 
@@ -96,7 +92,6 @@ final class ContentSchemaRegistry
             'research/areas' => self::RESEARCH_AREA,
             'data/items' => self::DATA_ITEM,
             'products/items' => self::PRODUCT,
-            'meetings' => self::MEETING,
             'publications' => self::PUBLICATION,
             'events' => self::EVENT,
             'news' => self::NEWS,
@@ -180,7 +175,7 @@ final class ContentSchemaRegistry
                         'About NSEE',
                         'Research',
                         'Data & Products',
-                        'Meetings',
+                        'Events',
                         'Publications',
                         'Outreach',
                     ]),
@@ -207,25 +202,17 @@ final class ContentSchemaRegistry
                 ],
                 'primary.2.children' => ['required', 'array', 'size:2'],
                 'primary.2.children.*.label' => ['required', 'string', 'distinct:strict', Rule::in(['Data', 'Products'])],
-                'utility' => ['required', 'array', 'size:5'],
+                'utility' => ['required', 'array', 'size:4'],
                 'utility.*.label' => [
                     'required',
                     'string',
                     'distinct:strict',
-                    Rule::in(['News', 'Events', 'Multimedia', 'Support NSEE', 'Login']),
+                    Rule::in(['News', 'Multimedia', 'Support NOSEE', 'Login']),
                 ],
                 'utility.*.url' => ['present', 'nullable', 'string'],
                 'utility.*.enabled' => $this->strictBooleanRules(),
-                'utility.4.label' => ['required', 'string', Rule::in(['Login'])],
-                'utility.4.enabled' => [
-                    'required',
-                    static function (string $attribute, mixed $value, Closure $fail): void {
-                        if ($value !== false) {
-                            $fail("The {$attribute} field must be false for V1.");
-                        }
-                    },
-                ],
-                'utility.4.version' => ['required', 'string', Rule::in(['v1'])],
+                'utility.3.label' => ['required', 'string', Rule::in(['Login'])],
+                'utility.3.version' => ['required', 'string', Rule::in(['v1'])],
             ],
             self::HOMEPAGE => [
                 'hero' => ['required', 'array'],
@@ -242,9 +229,59 @@ final class ContentSchemaRegistry
                 'hero.items.*.cta_url' => ['required', 'string', 'starts_with:/'],
             ],
             self::ABOUT => [
-                'title' => ['required', 'string'],
-                'summary' => ['required', 'string'],
-                'mission' => ['required', 'string'],
+                'page_title' => ['required', 'string'],
+                'intro' => ['required', 'array'],
+                'intro.eyebrow' => ['required', 'string'],
+                'intro.headline' => ['required', 'string'],
+                'intro.description_mobile' => ['required', 'string'],
+                'intro.description_tablet' => ['required', 'string'],
+                'intro.description' => ['required', 'string'],
+                'intro.closing_statement_compact' => ['required', 'string'],
+                'intro.closing_statement' => ['required', 'string'],
+                'intro.image_mobile' => ['required', 'string', 'starts_with:/media/about/', $this->existingPublicFileRule()],
+                'intro.image_tablet' => ['required', 'string', 'starts_with:/media/about/', $this->existingPublicFileRule()],
+                'intro.image' => ['required', 'string', 'starts_with:/media/about/', $this->existingPublicFileRule()],
+                'intro.image_alt' => ['required', 'string'],
+                'mission' => ['required', 'array'],
+                'mission.title' => ['required', 'string'],
+                'mission.statement_mobile' => ['required', 'string'],
+                'mission.statement_tablet' => ['required', 'string'],
+                'mission.statement' => ['required', 'string'],
+                'mission.objectives' => ['required', 'array', 'size:3'],
+                'mission.objectives.*' => ['required', 'array'],
+                'mission.objectives.*.number' => ['required', 'string', 'distinct:strict'],
+                'mission.objectives.*.title' => ['required', 'string'],
+                'mission.objectives.*.description_mobile' => ['required', 'string'],
+                'mission.objectives.*.description' => ['required', 'string'],
+                'quote' => ['required', 'array'],
+                'quote.text' => ['required', 'string'],
+                'quote.attribution' => ['required', 'string'],
+                'quote.image_tablet' => ['required', 'string', 'starts_with:/media/about/', $this->existingPublicFileRule()],
+                'quote.image' => ['required', 'string', 'starts_with:/media/about/', $this->existingPublicFileRule()],
+                'quote.image_alt' => ['required', 'string'],
+                'story' => ['required', 'array'],
+                'story.title' => ['required', 'string'],
+                'story.lead' => ['required', 'string'],
+                'story.body' => ['required', 'string'],
+                'story.image' => ['required', 'string', 'starts_with:/media/about/', $this->existingPublicFileRule()],
+                'story.image_alt' => ['required', 'string'],
+                'leadership' => ['required', 'array'],
+                'leadership.title' => ['required', 'string'],
+                'leadership.intro' => ['required', 'string'],
+                'leadership.people' => ['required', 'array', 'size:4'],
+                'leadership.people.*' => ['required', 'array'],
+                'leadership.people.*.name' => ['required', 'string'],
+                'leadership.people.*.title' => ['required', 'string'],
+                'leadership.people.*.image' => ['required', 'string', 'starts_with:/media/about/', $this->existingPublicFileRule()],
+                'leadership.people.*.image_alt' => ['required', 'string'],
+                'collaboration' => ['required', 'array'],
+                'collaboration.eyebrow' => ['required', 'string'],
+                'collaboration.title' => ['required', 'string'],
+                'collaboration.description' => ['required', 'string'],
+                'collaboration.actions' => ['required', 'array', 'size:3'],
+                'collaboration.actions.*' => ['required', 'array'],
+                'collaboration.actions.*.label' => ['required', 'string', 'distinct:strict'],
+                'collaboration.actions.*.url' => ['required', 'string', 'starts_with:/'],
             ],
             self::RESEARCH_INDEX => [
                 'title' => ['required', 'string'],
@@ -289,14 +326,6 @@ final class ContentSchemaRegistry
                 'status' => ['required', 'string', Rule::in(['active', 'beta', 'planned', 'archived'])],
                 'url' => ['present', 'nullable', 'url'],
             ],
-            self::MEETING => [
-                'slug' => ['required', 'string'],
-                'title' => ['required', 'string'],
-                'type' => ['required', 'string'],
-                'start_date' => ['required', 'date_format:Y-m-d'],
-                'end_date' => ['required', 'date_format:Y-m-d', 'after_or_equal:start_date'],
-                'venue' => ['required', 'string'],
-            ],
             self::PUBLICATION => [
                 'slug' => ['required', 'string'],
                 'title' => ['required', 'string'],
@@ -322,12 +351,46 @@ final class ContentSchemaRegistry
                 'title' => ['required', 'string'],
                 'type' => ['required', 'string', Rule::in(self::EVENT_TYPES)],
                 'summary' => ['required', 'string'],
-                'start_date' => ['required', 'date_format:Y-m-d'],
-                'end_date' => ['required', 'date_format:Y-m-d', 'after_or_equal:start_date'],
-                'timezone' => ['required', 'string', 'timezone'],
-                'venue' => ['required', 'string'],
-                'registration_url' => ['present', 'nullable', 'url'],
                 'featured' => $this->strictBooleanRules(),
+                'image' => ['present', 'nullable', 'string'],
+                'image_alt' => ['present', 'nullable', 'required_with:image', 'string'],
+                'timezone' => ['required', 'string', 'timezone'],
+                'start_date' => ['required', 'date_format:Y-m-d'],
+                'end_date' => ['present', 'nullable', 'date_format:Y-m-d'],
+                'schedule' => ['required', 'array'],
+                'schedule.mode' => ['required', 'string', Rule::in(['single_day', 'multi_day'])],
+                'schedule.start_time' => ['present', 'nullable', 'date_format:H:i'],
+                'schedule.end_time' => ['present', 'nullable', 'date_format:H:i'],
+                'schedule.itinerary' => ['present', 'array'],
+                'schedule.itinerary.*' => ['required', 'array'],
+                'schedule.itinerary.*.date' => ['required', 'date_format:Y-m-d'],
+                'schedule.itinerary.*.start_time' => ['required', 'date_format:H:i'],
+                'schedule.itinerary.*.end_time' => ['present', 'nullable', 'date_format:H:i'],
+                'schedule.itinerary.*.title' => ['present', 'nullable', 'string'],
+                'schedule.itinerary.*.description' => ['present', 'nullable', 'string'],
+                'location' => ['required', 'array'],
+                'location.type' => ['required', 'string', Rule::in(['physical', 'online', 'hybrid'])],
+                'location.venue' => ['present', 'nullable', 'required_if:location.type,physical,hybrid', 'string'],
+                'location.address' => ['present', 'nullable', 'string'],
+                'location.city' => ['present', 'nullable', 'required_if:location.type,physical,hybrid', 'string'],
+                'location.country' => ['present', 'nullable', 'required_if:location.type,physical,hybrid', 'string'],
+                'location.platform' => ['present', 'nullable', 'required_if:location.type,online,hybrid', 'string'],
+                'application_deadline' => ['present', 'nullable', 'date_format:Y-m-d\TH:i:sP'],
+                'meeting_site_url' => [
+                    'present',
+                    'nullable',
+                    'required_if:type,meeting',
+                    $this->httpsUrlRule(),
+                ],
+                'organiser' => ['present', 'nullable', 'required_unless:type,meeting', 'string'],
+                'speakers' => ['present', 'array'],
+                'speakers.*' => ['required', 'string'],
+                'registration_url' => ['present', 'nullable', 'url'],
+                'body' => ['present', 'nullable', 'required_unless:type,meeting', 'string'],
+                'resources' => ['present', 'array'],
+                'resources.*' => ['required', 'array'],
+                'resources.*.label' => ['required', 'string'],
+                'resources.*.url' => ['required', 'url'],
             ],
             self::NEWS => [
                 'slug' => ['required', 'string'],
@@ -394,6 +457,24 @@ final class ContentSchemaRegistry
                 || ! str_starts_with($resolvedPath, $publicPath.DIRECTORY_SEPARATOR)
             ) {
                 $fail("The {$attribute} field must reference an existing public file.");
+            }
+        };
+    }
+
+    private function httpsUrlRule(): Closure
+    {
+        return static function (string $attribute, mixed $value, Closure $fail): void {
+            if ($value === null) {
+                return;
+            }
+
+            if (
+                ! is_string($value)
+                || filter_var($value, FILTER_VALIDATE_URL) === false
+                || parse_url($value, PHP_URL_SCHEME) !== 'https'
+                || ! is_string(parse_url($value, PHP_URL_HOST))
+            ) {
+                $fail("The {$attribute} field must be a valid HTTPS URL.");
             }
         };
     }

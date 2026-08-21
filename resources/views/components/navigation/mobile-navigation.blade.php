@@ -1,46 +1,51 @@
 <header
-    class="fixed inset-x-0 top-0 z-40 lg:hidden"
+    class="group/navigation fixed inset-x-0 top-0 z-40 text-inverse lg:hidden"
     data-mobile-navigation
     data-scroll-navigation
     data-transparent="{{ $transparent ? 'true' : 'false' }}"
+    data-navigation-mode="{{ $transparent ? 'expanded' : 'compact' }}"
 >
-    {{-- Stack both header states so shared scroll logic can switch them without rebuilding markup. --}}
-    <div class="relative z-20 h-[4.5rem] text-inverse">
-        <div class="absolute inset-0" data-navigation-state="transparent" @if (! $transparent) hidden @endif>
-            <x-ui.container class="h-full">
-                <div class="flex h-full items-center">
-                    <a
-                        href="/"
-                        @if ($homeCurrent) aria-current="page" @endif
-                        class="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-                    >
-                        <img src="/logoWhite.png" alt="{{ config('app.name', 'NOSEE') }}" class="h-auto w-36">
-                    </a>
-                </div>
-            </x-ui.container>
-        </div>
+    <div class="relative z-20 bg-brand">
+        <x-ui.container class="flex h-[4.5rem] items-center justify-between gap-4">
+            <div class="flex items-center">
+                @foreach ($utility as $item)
+                    @if ($item['label'] === 'Support NOSEE')
+                        <x-ui.button
+                            href="{{ $item['url'] }}"
+                            size="sm"
+                            intent="secondary"
+                            :aria-current="$item['current'] ? 'page' : false"
+                            class="!bg-white !text-brand uppercase hover:!bg-white/90 active:!bg-white/80 {{ $item['active'] ? 'underline decoration-2 underline-offset-4' : '' }}"
+                        >
+                            {{ $item['label'] }}
+                        </x-ui.button>
+                    @elseif ($item['label'] === 'Login')
+                        <span class="mx-3 h-8 w-px shrink-0 bg-white" aria-hidden="true"></span>
+                        <a
+                            href="{{ $item['url'] }}"
+                            aria-label="Login"
+                            @if ($item['current']) aria-current="page" @endif
+                            class="flex size-9 shrink-0 items-center justify-center rounded-sm text-inverse focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                        >
+                            <svg
+                                class="size-7"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.75"
+                                aria-hidden="true"
+                            >
+                                <circle cx="12" cy="7" r="4" />
+                                <path d="M4.5 21a7.5 7.5 0 0 1 15 0" stroke-linecap="round" />
+                            </svg>
+                        </a>
+                    @endif
+                @endforeach
+            </div>
 
-        <div
-            class="absolute inset-0 bg-[rgb(19_133_61_/_0.5)] backdrop-blur-[10px]"
-            data-navigation-state="compact"
-            @if ($transparent) hidden @endif
-        >
-            <x-ui.container class="flex h-full items-center">
-                <a
-                    href="/"
-                    @if ($homeCurrent) aria-current="page" @endif
-                    class="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-                >
-                    <img src="/logo.png" alt="{{ config('app.name', 'NOSEE') }}" class="h-auto w-36">
-                </a>
-            </x-ui.container>
-        </div>
-
-        {{-- Keep one accessible control responsible for opening and closing the drawer. --}}
-        <x-ui.container class="pointer-events-none absolute inset-0 flex h-full items-center justify-end">
             <button
                 type="button"
-                class="pointer-events-auto flex size-11 items-center justify-center rounded-md text-inverse focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                class="flex size-11 shrink-0 items-center justify-center rounded-md text-inverse focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                 aria-label="Open navigation menu"
                 aria-expanded="false"
                 aria-controls="mobile-navigation-drawer"
@@ -56,6 +61,26 @@
                     <span class="absolute top-1/2 left-1/2 h-0.5 w-[1.375rem] -translate-1/2 -rotate-45 bg-current"></span>
                 </span>
             </button>
+        </x-ui.container>
+    </div>
+
+    <div
+        class="relative z-0 max-h-48 overflow-hidden bg-black/70 opacity-100 backdrop-blur-[10px] transition-[max-height,opacity] duration-300 ease-out motion-reduce:transition-none group-data-[navigation-mode=compact]/navigation:pointer-events-none group-data-[navigation-mode=compact]/navigation:max-h-0 group-data-[navigation-mode=compact]/navigation:opacity-0"
+        data-navigation-expanded-only
+        @if (! $transparent) inert @endif
+    >
+        <x-ui.container class="py-4">
+            <a
+                href="/"
+                @if ($homeCurrent) aria-current="page" @endif
+                class="block rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            >
+                <img
+                    src="/logoWhite.png"
+                    alt="{{ config('app.name', 'NOSEE') }}"
+                    class="mx-auto h-auto w-full max-w-[31.25rem]"
+                >
+            </a>
         </x-ui.container>
     </div>
 
@@ -147,11 +172,11 @@
                     @endforeach
                 </ul>
 
-                {{-- Utility links follow the primary navigation, with Support kept as the final action. --}}
+                {{-- Utility links follow the primary navigation; Support and Login remain in the fixed top band. --}}
                 <div class="mt-5 border-t border-line-mild pt-4">
                     <ul>
                         @foreach ($utility as $item)
-                            @if ($item['label'] !== 'Support NSEE')
+                            @if (! in_array($item['label'], ['Support NOSEE', 'Login'], true))
                                 <li>
                                     <a
                                         href="{{ $item['url'] }}"
@@ -167,19 +192,6 @@
                             @endif
                         @endforeach
                     </ul>
-
-                    @foreach ($utility as $item)
-                        @if ($item['label'] === 'Support NSEE')
-                            <x-ui.button
-                                href="{{ $item['url'] }}"
-                                size="lg"
-                                :aria-current="$item['current'] ? 'page' : false"
-                                class="mt-4 w-full uppercase {{ $item['active'] ? 'underline decoration-2 underline-offset-4' : '' }}"
-                            >
-                                {{ $item['label'] }}
-                            </x-ui.button>
-                        @endif
-                    @endforeach
                 </div>
             </nav>
         </x-ui.container>

@@ -11,7 +11,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @stack('head')
     </head>
-    <body>
+    <body class="[--compact-navbar-offset:4.5rem] lg:[--compact-navbar-offset:6.5rem]">
         {{-- Let keyboard users bypass repeated navigation and reach page content directly. --}}
         <a
             href="#main-content"
