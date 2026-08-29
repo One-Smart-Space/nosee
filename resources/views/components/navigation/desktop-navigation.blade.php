@@ -6,7 +6,7 @@
     data-navigation-mode="{{ $transparent ? 'expanded' : 'compact' }}"
 >
     <x-ui.container
-        class="flex h-[10.25rem] items-center transition-[height] duration-300 ease-out motion-reduce:transition-none group-data-[navigation-mode=compact]/navigation:h-[6.5rem]"
+        class="flex h-[8.75rem] items-center [--desktop-navigation-content-height:5.8rem] transition-[height] duration-300 ease-out motion-reduce:transition-none group-data-[navigation-mode=compact]/navigation:h-[6.5rem] group-data-[navigation-mode=compact]/navigation:[--desktop-navigation-content-height:4.5rem] xl:h-[10.25rem] xl:[--desktop-navigation-content-height:7.5rem] xl:group-data-[navigation-mode=compact]/navigation:h-[6.5rem] xl:group-data-[navigation-mode=compact]/navigation:[--desktop-navigation-content-height:4.5rem]"
     >
         <a
             href="/"
@@ -16,13 +16,13 @@
             <img
                 src="/logoWhite.png"
                 alt="{{ config('app.name', 'NOSEE') }}"
-                class="h-auto w-72 transition-[width] duration-300 ease-out motion-reduce:transition-none group-data-[navigation-mode=compact]/navigation:w-56 xl:w-[23.3125rem] xl:group-data-[navigation-mode=compact]/navigation:w-56"
+                class="h-[var(--desktop-navigation-content-height)] w-auto transition-[height] duration-300 ease-out motion-reduce:transition-none"
             >
         </a>
 
-        <div class="flex min-w-0 flex-1 flex-col self-stretch pl-8 xl:pl-16">
+        <div class="flex h-[var(--desktop-navigation-content-height)] min-w-0 flex-1 flex-col pl-8 transition-[height] duration-300 ease-out motion-reduce:transition-none xl:pl-16">
             <nav
-                class="flex h-[6.25rem] items-end justify-end gap-1 overflow-hidden pb-5 font-body transition-[height,padding] duration-300 ease-out motion-reduce:transition-none group-data-[navigation-mode=compact]/navigation:h-12 group-data-[navigation-mode=compact]/navigation:pb-2"
+                class="flex h-1/2 items-center justify-end gap-1 overflow-hidden font-body"
                 aria-label="Utility navigation"
             >
                 @foreach ($utility as $item)
@@ -71,7 +71,7 @@
             </nav>
 
             <nav
-                class="h-16 transition-[height] duration-300 ease-out motion-reduce:transition-none group-data-[navigation-mode=compact]/navigation:h-14"
+                class="h-1/2"
                 aria-label="Primary navigation"
             >
                 <x-navigation.desktop-primary-links :items="$primary" />
