@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'name' => 'NOSEE',
+    'name' => 'NSEE',
     'tagline' => 'Research, data, and collaboration.',
     'description' => 'Starter website content for local development.',
     'footer' => [
@@ -10,6 +10,7 @@ return [
             [
                 'heading' => 'Quick Links',
                 'links' => [
+                    ['label' => 'Join NSEE', 'url' => '/join'],
                     ['label' => 'Mission & Vision', 'url' => '/about#mission'],
                     ['label' => 'Research', 'url' => '/research'],
                     ['label' => 'People', 'url' => '/people'],

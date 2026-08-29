@@ -83,6 +83,12 @@ class EventsPageTest extends TestCase
             ->assertSee('href="https://meeting.example.org"', false)
             ->assertSee('target="_blank"', false)
             ->assertSee('rel="noopener noreferrer"', false)
+            ->assertSee('/media/icons/search.svg', false)
+            ->assertSee('/media/icons/arrow-up-right.svg', false)
+            ->assertDontSee('/media/icons/search-ring.svg', false)
+            ->assertDontSee('/media/icons/search-handle.svg', false)
+            ->assertDontSee('/media/icons/arrow-up-right-stem.svg', false)
+            ->assertDontSee('/media/icons/arrow-up-right-head.svg', false)
             ->assertSee('href="/events/regular-event"', false);
 
         $this->assertLessThan(strpos($html, 'Upcoming Events'), strpos($html, 'Ongoing Events'));

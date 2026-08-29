@@ -27,10 +27,7 @@
                     >
                     <button type="submit" class="inline-flex h-10 items-center justify-center gap-1.5 bg-brand px-4 text-sm font-medium text-inverse focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
                         Search
-                        <span class="relative block size-4" aria-hidden="true">
-                            <img src="/media/icons/search-ring.svg" alt="" class="absolute top-0.5 left-0.5 h-[11.5px] w-[11.5px]">
-                            <img src="/media/icons/search-handle.svg" alt="" class="absolute right-0.5 bottom-0.5 h-[5.5px] w-[5.5px]">
-                        </span>
+                        <img src="/media/icons/search.svg" alt="" class="size-4" aria-hidden="true">
                     </button>
                 </form>
             </header>
