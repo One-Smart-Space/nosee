@@ -132,35 +132,13 @@
                 </div>
             </section>
 
-            <section id="leadership" class="mt-24 scroll-mt-32 xl:mt-[120px]" aria-labelledby="leadership-heading">
-                <div class="grid gap-x-8 gap-y-6 xl:grid-cols-12">
-                    <h2 id="leadership-heading" class="font-heading text-[36px] leading-[44px] font-semibold text-primary xl:col-span-4 xl:text-[40px] xl:leading-[48px]">
-                        {{ $about['leadership']['title'] }}
-                    </h2>
-                    <p class="text-lg leading-7 text-secondary xl:col-start-6 xl:col-span-7">
-                        {{ $about['leadership']['intro'] }}
-                    </p>
-                </div>
-
-                <div class="mt-10 grid gap-x-8 gap-y-12 sm:grid-cols-2 xl:grid-cols-4">
-                    @foreach ($about['leadership']['people'] as $person)
-                        <figure>
-                            <img
-                                src="{{ $person['image'] }}"
-                                alt="{{ $person['image_alt'] }}"
-                                width="304"
-                                height="380"
-                                loading="lazy"
-                                class="aspect-[4/5] w-full object-cover"
-                            >
-                            <figcaption class="mt-5 border-t border-line-mild pt-4">
-                                <h3 class="font-heading text-xl leading-7 font-medium text-primary">{{ $person['name'] }}</h3>
-                                <p class="mt-1 text-sm leading-5 text-secondary">{{ $person['title'] }}</p>
-                            </figcaption>
-                        </figure>
-                    @endforeach
-                </div>
-            </section>
+            <x-about.profile-carousel
+                id="leadership"
+                :title="$about['leadership']['title']"
+                :intro="$about['leadership']['intro']"
+                :profiles="$about['leadership']['people']"
+                class="mt-24 xl:mt-[120px]"
+            />
 
             <section id="collaborations" class="mt-24 scroll-mt-32 border-t border-line-strong pt-8 xl:mt-36 xl:grid xl:grid-cols-12 xl:gap-x-8 xl:pt-10" aria-labelledby="collaboration-heading">
                 <p class="text-sm leading-[18px] font-medium text-brand uppercase xl:col-span-3">

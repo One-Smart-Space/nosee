@@ -11,7 +11,6 @@ return [
                 'heading' => 'Quick Links',
                 'links' => [
                     ['label' => 'Join NSEE', 'url' => '/join'],
-                    ['label' => 'Mission & Vision', 'url' => '/about#mission'],
                     ['label' => 'Research', 'url' => '/research'],
                     ['label' => 'People', 'url' => '/people'],
                     ['label' => 'News', 'url' => '/news'],

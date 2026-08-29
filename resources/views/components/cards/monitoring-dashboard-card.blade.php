@@ -5,14 +5,14 @@
     data-monitoring-dashboard-card
 >
     {{-- Keep the dashboard title compact while allowing long names to wrap. --}}
-    <div class="p-2">
+    <div class="p-4">
         <h3 class="break-words font-heading text-base leading-6 font-medium tracking-[-0.02em] text-[#0b5025]">
             {{ $record['title'] }}
         </h3>
     </div>
 
     {{-- Preserve a stable preview area regardless of the source image dimensions. --}}
-    <div class="aspect-video overflow-hidden border-y border-line-soft">
+    <div class="aspect-video overflow-hidden border-y border-line-soft px-2">
         <img
             src="{{ $record['image'] }}"
             alt="{{ $record['image_alt'] }}"
@@ -23,7 +23,7 @@
     </div>
 
     {{-- Pair the external product action with attribution that can wrap on narrow cards. --}}
-    <div class="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 p-2 text-xs tracking-[-0.02em]">
+    <div class="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 p-4 text-xs tracking-[-0.02em]">
         <a
             href="{{ $record['source_url'] }}"
             target="_blank"

@@ -1,6 +1,7 @@
 import './navigation-state.js';
 import './mobile-navigation.js';
 import './hero-carousel.js';
+import './profile-carousel.js';
 import './newsletter.js';
 
 export function loadHomepageAnimations(documentObject, importer = () => import('./homepage-animations.js')) {
