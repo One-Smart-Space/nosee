@@ -4,7 +4,7 @@
 
 @section('content')
     <article class="pb-24 lg:pb-32" data-about-page>
-        <x-ui.container class="pt-[84px] lg:pt-[120px]">
+        <x-ui.container class="pt-[84px] lg:pt-20">
             <header class="grid gap-y-7 lg:grid-cols-8 lg:gap-x-6 lg:gap-y-0 xl:grid-cols-12 xl:gap-x-8">
                 <h1 class="font-heading text-[22px] leading-[30px] font-medium text-primary lg:col-span-2 lg:pt-[13px] xl:col-span-3 xl:pt-0 xl:text-2xl xl:leading-8">
                     {{ $about['page_title'] }}

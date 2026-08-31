@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class HomePageTest extends TestCase
 {
-    public function test_homepage_route_uses_the_controller_and_transparent_layout(): void
+    public function test_homepage_route_uses_the_controller_and_overlay_layout(): void
     {
         $this->withoutVite();
 
@@ -38,7 +38,7 @@ class HomePageTest extends TestCase
             ->assertSee('Quick Links')
             ->assertSee('Privacy Policy')
             ->assertSee('data-transparent="true"', false)
-            ->assertDontSee('pt-[4.5rem] lg:pt-16', false);
+            ->assertDontSee('pt-[var(--expanded-navbar-offset)]', false);
 
         $this->assertLessThan(
             strpos($html, 'data-monitoring-dashboard-section'),

@@ -1,0 +1,118 @@
+{
+  "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-italic.woff": {
+    "file": "assets/ibm-plex-sans-latin-400-italic-CsGl1sm0.woff",
+    "src": "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-italic.woff"
+  },
+  "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-italic.woff2": {
+    "file": "assets/ibm-plex-sans-latin-400-italic-CZTNEAuW.woff2",
+    "src": "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-italic.woff2"
+  },
+  "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff": {
+    "file": "assets/ibm-plex-sans-latin-400-normal-CYLoc0-x.woff",
+    "src": "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff"
+  },
+  "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2": {
+    "file": "assets/ibm-plex-sans-latin-400-normal-CDDApCn2.woff2",
+    "src": "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2"
+  },
+  "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-500-normal.woff": {
+    "file": "assets/ibm-plex-sans-latin-500-normal-BgVn5rGT.woff",
+    "src": "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-500-normal.woff"
+  },
+  "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-500-normal.woff2": {
+    "file": "assets/ibm-plex-sans-latin-500-normal-6ng42L7E.woff2",
+    "src": "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-500-normal.woff2"
+  },
+  "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-600-normal.woff": {
+    "file": "assets/ibm-plex-sans-latin-600-normal-Cu4Hd6ag.woff",
+    "src": "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-600-normal.woff"
+  },
+  "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-600-normal.woff2": {
+    "file": "assets/ibm-plex-sans-latin-600-normal-CuJfVYMP.woff2",
+    "src": "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-600-normal.woff2"
+  },
+  "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-700-normal.woff": {
+    "file": "assets/ibm-plex-sans-latin-700-normal-Bth3BMcD.woff",
+    "src": "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-700-normal.woff"
+  },
+  "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-700-normal.woff2": {
+    "file": "assets/ibm-plex-sans-latin-700-normal-Bxkt5Cjx.woff2",
+    "src": "node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-700-normal.woff2"
+  },
+  "node_modules/@fontsource/ubuntu-sans/files/ubuntu-sans-latin-400-normal.woff": {
+    "file": "assets/ubuntu-sans-latin-400-normal-CWnkHMcG.woff",
+    "src": "node_modules/@fontsource/ubuntu-sans/files/ubuntu-sans-latin-400-normal.woff"
+  },
+  "node_modules/@fontsource/ubuntu-sans/files/ubuntu-sans-latin-400-normal.woff2": {
+    "file": "assets/ubuntu-sans-latin-400-normal-CGjv80r0.woff2",
+    "src": "node_modules/@fontsource/ubuntu-sans/files/ubuntu-sans-latin-400-normal.woff2"
+  },
+  "node_modules/@fontsource/ubuntu-sans/files/ubuntu-sans-latin-500-normal.woff": {
+    "file": "assets/ubuntu-sans-latin-500-normal-nA-8N1ie.woff",
+    "src": "node_modules/@fontsource/ubuntu-sans/files/ubuntu-sans-latin-500-normal.woff"
+  },
+  "node_modules/@fontsource/ubuntu-sans/files/ubuntu-sans-latin-500-normal.woff2": {
+    "file": "assets/ubuntu-sans-latin-500-normal-Cd1eMUUu.woff2",
+    "src": "node_modules/@fontsource/ubuntu-sans/files/ubuntu-sans-latin-500-normal.woff2"
+  },
+  "node_modules/@fontsource/ubuntu-sans/files/ubuntu-sans-latin-600-normal.woff": {
+    "file": "assets/ubuntu-sans-latin-600-normal-8T0qO9Eo.woff",
+    "src": "node_modules/@fontsource/ubuntu-sans/files/ubuntu-sans-latin-600-normal.woff"
+  },
+  "node_modules/@fontsource/ubuntu-sans/files/ubuntu-sans-latin-600-normal.woff2": {
+    "file": "assets/ubuntu-sans-latin-600-normal-uVJkwLad.woff2",
+    "src": "node_modules/@fontsource/ubuntu-sans/files/ubuntu-sans-latin-600-normal.woff2"
+  },
+  "node_modules/@fontsource/ubuntu-sans/files/ubuntu-sans-latin-700-normal.woff": {
+    "file": "assets/ubuntu-sans-latin-700-normal-BClJCgMI.woff",
+    "src": "node_modules/@fontsource/ubuntu-sans/files/ubuntu-sans-latin-700-normal.woff"
+  },
+  "node_modules/@fontsource/ubuntu-sans/files/ubuntu-sans-latin-700-normal.woff2": {
+    "file": "assets/ubuntu-sans-latin-700-normal-Cf_LNDvD.woff2",
+    "src": "node_modules/@fontsource/ubuntu-sans/files/ubuntu-sans-latin-700-normal.woff2"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-D8pWRZYp.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "assets": [
+      "assets/ubuntu-sans-latin-400-normal-CGjv80r0.woff2",
+      "assets/ubuntu-sans-latin-400-normal-CWnkHMcG.woff",
+      "assets/ubuntu-sans-latin-500-normal-Cd1eMUUu.woff2",
+      "assets/ubuntu-sans-latin-500-normal-nA-8N1ie.woff",
+      "assets/ubuntu-sans-latin-600-normal-uVJkwLad.woff2",
+      "assets/ubuntu-sans-latin-600-normal-8T0qO9Eo.woff",
+      "assets/ubuntu-sans-latin-700-normal-Cf_LNDvD.woff2",
+      "assets/ubuntu-sans-latin-700-normal-BClJCgMI.woff",
+      "assets/ibm-plex-sans-latin-400-normal-CDDApCn2.woff2",
+      "assets/ibm-plex-sans-latin-400-normal-CYLoc0-x.woff",
+      "assets/ibm-plex-sans-latin-400-italic-CZTNEAuW.woff2",
+      "assets/ibm-plex-sans-latin-400-italic-CsGl1sm0.woff",
+      "assets/ibm-plex-sans-latin-500-normal-6ng42L7E.woff2",
+      "assets/ibm-plex-sans-latin-500-normal-BgVn5rGT.woff",
+      "assets/ibm-plex-sans-latin-600-normal-CuJfVYMP.woff2",
+      "assets/ibm-plex-sans-latin-600-normal-Cu4Hd6ag.woff",
+      "assets/ibm-plex-sans-latin-700-normal-Bxkt5Cjx.woff2",
+      "assets/ibm-plex-sans-latin-700-normal-Bth3BMcD.woff"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-BvLEbi4Y.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/homepage-animations.js"
+    ]
+  },
+  "resources/js/homepage-animations.js": {
+    "file": "assets/homepage-animations-BhH5Kn07.js",
+    "name": "homepage-animations",
+    "src": "resources/js/homepage-animations.js",
+    "isDynamicEntry": true
+  }
+}

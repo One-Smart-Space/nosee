@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="pb-20" data-event-archive-page>
-        <x-ui.container class="pt-10 lg:pt-16">
+        <x-ui.container class="pt-10 lg:pt-6">
             <header class="max-w-2xl">
                 <h1 class="font-heading text-[40px] leading-[48px] font-semibold text-primary lg:text-5xl lg:leading-14">
                     Event Archives

@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="events-listing pb-20" data-events-page>
-        <x-ui.container class="flex flex-col gap-10 pt-10 lg:gap-16 lg:pt-16">
+        <x-ui.container class="flex flex-col gap-10 pt-10 lg:gap-16 lg:pt-6">
             <header class="flex items-end justify-between gap-12">
                 <div class="max-w-xl">
                     <h1 class="font-heading text-[40px] leading-[48px] font-semibold text-primary lg:text-5xl lg:leading-14">

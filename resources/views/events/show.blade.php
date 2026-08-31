@@ -4,7 +4,7 @@
 
 @section('content')
     <article class="pb-20" data-event-detail-page data-event-state="{{ $event['state'] }}">
-        <x-ui.container class="pt-10 lg:pt-16">
+        <x-ui.container class="pt-10 lg:pt-6">
             <header class="max-w-5xl border-b border-line-soft pb-8 lg:pb-12">
                 <p class="w-fit px-3 py-1 text-sm leading-6 font-medium uppercase {{ $event['presentation']['type']['tag_classes'] }}">
                     {{ str($event['type'])->replace('-', ' ') }}
