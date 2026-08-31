@@ -34,9 +34,13 @@ class AboutPageTest extends TestCase
                     $about['story']['lead'],
                     $about['leadership']['people'],
                     $about['collaboration']['actions'],
-                );
+                ) && count($about['leadership']['people']) === 7;
             })
             ->assertSee('data-about-page', false)
+            ->assertSee('data-profile-carousel', false)
+            ->assertSee('data-profile-previous', false)
+            ->assertSee('data-profile-next', false)
+            ->assertSee('Leadership profile 07')
             ->assertSee('This mockup treats the page like an editorial feature')
             ->assertSee('Our Mission')
             ->assertSee('John Doe')

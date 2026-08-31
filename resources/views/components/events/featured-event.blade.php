@@ -45,10 +45,7 @@
             <span class="truncate">{{ $cta }}</span>
             <x-slot:icon>
                 @if ($event['external'])
-                    <span class="relative block size-4" aria-hidden="true">
-                        <img src="/media/icons/arrow-up-right-stem.svg" alt="" class="absolute inset-1/4 size-2.5">
-                        <img src="/media/icons/arrow-up-right-head.svg" alt="" class="absolute top-1/4 right-1/4 size-2">
-                    </span>
+                    <img src="/media/icons/arrow-up-right.svg" alt="" class="size-4">
                 @else
                     <img src="/media/icons/arrow-right.svg" alt="" class="size-4">
                 @endif

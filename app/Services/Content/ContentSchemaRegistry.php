@@ -268,7 +268,7 @@ final class ContentSchemaRegistry
                 'leadership' => ['required', 'array'],
                 'leadership.title' => ['required', 'string'],
                 'leadership.intro' => ['required', 'string'],
-                'leadership.people' => ['required', 'array', 'size:4'],
+                'leadership.people' => ['required', 'array', 'min:1'],
                 'leadership.people.*' => ['required', 'array'],
                 'leadership.people.*.name' => ['required', 'string'],
                 'leadership.people.*.title' => ['required', 'string'],

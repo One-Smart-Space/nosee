@@ -4,7 +4,7 @@
 
 @section('content')
     <article class="pb-20" data-event-detail-page data-event-state="{{ $event['state'] }}">
-        <x-ui.container class="pt-10 lg:pt-16">
+        <x-ui.container class="pt-10 lg:pt-6">
             <header class="max-w-5xl border-b border-line-soft pb-8 lg:pb-12">
                 <p class="w-fit px-3 py-1 text-sm leading-6 font-medium uppercase {{ $event['presentation']['type']['tag_classes'] }}">
                     {{ str($event['type'])->replace('-', ' ') }}
@@ -69,10 +69,7 @@
                     >
                         REGISTER
                         <x-slot:icon>
-                            <span class="relative block size-4" aria-hidden="true">
-                                <img src="/media/icons/arrow-up-right-stem.svg" alt="" class="absolute inset-1/4 size-2.5 brightness-0 invert">
-                                <img src="/media/icons/arrow-up-right-head.svg" alt="" class="absolute top-1/4 right-1/4 size-2 brightness-0 invert">
-                            </span>
+                            <img src="/media/icons/arrow-up-right.svg" alt="" class="size-4 brightness-0 invert">
                         </x-slot:icon>
                     </x-ui.button>
                 </div>
@@ -133,10 +130,7 @@
                                             class="flex min-h-14 items-center justify-between gap-4 py-3 font-medium text-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                                         >
                                             {{ $resource['label'] }}
-                                            <span class="relative block size-4 shrink-0" aria-hidden="true">
-                                                <img src="/media/icons/arrow-up-right-stem.svg" alt="" class="absolute inset-1/4 size-2.5">
-                                                <img src="/media/icons/arrow-up-right-head.svg" alt="" class="absolute top-1/4 right-1/4 size-2">
-                                            </span>
+                                            <img src="/media/icons/arrow-up-right.svg" alt="" class="size-4 shrink-0" aria-hidden="true">
                                         </a>
                                     </li>
                                 @endforeach

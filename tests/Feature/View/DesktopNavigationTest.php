@@ -32,8 +32,9 @@ class DesktopNavigationTest extends TestCase
         $this->assertStringNotContainsString('inert', $html);
         $this->assertStringContainsString('src="/logoWhite.png"', $html);
         $this->assertStringContainsString('bg-black/70', $html);
-        $this->assertStringContainsString('group-data-[navigation-mode=compact]/navigation:h-12', $html);
-        $this->assertStringContainsString('group-data-[navigation-mode=compact]/navigation:h-14', $html);
+        $this->assertStringContainsString('group-data-[navigation-mode=compact]/navigation:[--desktop-navigation-content-height:4.5rem]', $html);
+        $this->assertStringContainsString('h-[var(--desktop-navigation-content-height)] w-auto', $html);
+        $this->assertSame(2, substr_count($html, 'h-1/2'));
     }
 
     public function test_transparent_navigation_is_the_initial_transparent_state(): void
@@ -43,6 +44,8 @@ class DesktopNavigationTest extends TestCase
         $this->assertStringContainsString('data-transparent="true"', $html);
         $this->assertStringContainsString('data-navigation-mode="expanded"', $html);
         $this->assertStringContainsString('src="/logoWhite.png"', $html);
+        $this->assertStringContainsString('[--desktop-navigation-content-height:5.8rem]', $html);
+        $this->assertStringContainsString('xl:[--desktop-navigation-content-height:7.5rem]', $html);
         $this->assertStringNotContainsString('border-b border-white/70', $html);
     }
 

@@ -1,6 +1,6 @@
 @props(['items'])
 
-<ul {{ $attributes->class('flex h-full w-full items-center justify-between gap-4') }}>
+<ul {{ $attributes->class('flex h-full w-full items-center justify-between gap-4 border-t border-white/20') }}>
     @foreach ($items as $item)
         @php($hasDropdown = $item['label'] === 'Data & Products' && isset($item['children']))
 

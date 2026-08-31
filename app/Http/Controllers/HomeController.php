@@ -20,7 +20,7 @@ final class HomeController extends Controller
             'researchOutputs' => $homepage['research_outputs'],
             'trendingArticles' => $homepage['trending_news'],
             'upcomingEvents' => $homepage['upcoming_events'],
-            'transparentNavigation' => true,
+            'navigationOverlaysContent' => true,
         ]);
     }
 }

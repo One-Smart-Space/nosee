@@ -104,6 +104,9 @@ class EventDetailTest extends TestCase
             ->assertSee('href="https://resources.example.org/guide"', false)
             ->assertSee('target="_blank"', false)
             ->assertSee('rel="noopener noreferrer"', false)
+            ->assertSee('/media/icons/arrow-up-right.svg', false)
+            ->assertDontSee('/media/icons/arrow-up-right-stem.svg', false)
+            ->assertDontSee('/media/icons/arrow-up-right-head.svg', false)
             ->assertSee('&lt;script&gt;', false)
             ->assertDontSee('<script>', false);
 

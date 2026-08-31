@@ -83,6 +83,24 @@ return [
                 'image' => '/media/about/earth-from-space.png',
                 'image_alt' => 'Cloud systems over Earth, used as a temporary leadership profile visual.',
             ],
+            [
+                'name' => 'Leadership profile 05',
+                'title' => 'Role to be confirmed',
+                'image' => '/media/about/earth-space-environment.png',
+                'image_alt' => 'A false-colour Earth-space visualisation used as a temporary leadership profile visual.',
+            ],
+            [
+                'name' => 'Leadership profile 06',
+                'title' => 'Role to be confirmed',
+                'image' => '/media/about/solar-observation.png',
+                'image_alt' => 'A bright solar observation used as a temporary leadership profile visual.',
+            ],
+            [
+                'name' => 'Leadership profile 07',
+                'title' => 'Role to be confirmed',
+                'image' => '/media/about/earth-from-space.png',
+                'image_alt' => 'Earth viewed from orbit, used as a temporary leadership profile visual.',
+            ],
         ],
     ],
     'collaboration' => [

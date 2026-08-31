@@ -62,34 +62,38 @@ class MobileNavigationTest extends TestCase
         $this->assertStringContainsString('h-8 w-px shrink-0 bg-white', $html);
     }
 
-    public function test_layout_passes_one_transparent_value_to_both_navigation_components(): void
+    public function test_layout_starts_both_navigation_variants_expanded(): void
     {
         $this->withoutVite();
 
-        $html = view('layouts.app', ['transparentNavigation' => true])->render();
+        $html = view('layouts.app')->render();
 
         $this->assertSame(2, substr_count($html, 'data-transparent="true"'));
+        $this->assertSame(2, substr_count($html, 'data-navigation-mode="expanded"'));
         $this->assertStringContainsString('data-mobile-navigation', $html);
         $this->assertStringContainsString('data-desktop-navigation', $html);
     }
 
-    public function test_non_transparent_layout_offsets_main_for_both_header_heights(): void
+    public function test_regular_layout_offsets_main_for_the_responsive_expanded_header(): void
     {
         $this->withoutVite();
 
         $html = view('layouts.app')->render();
 
         $this->assertStringContainsString('id="main-content"', $html);
-        $this->assertStringContainsString('pt-[4.5rem] lg:pt-16', $html);
+        $this->assertStringContainsString('pt-[var(--expanded-navbar-offset)]', $html);
+        $this->assertStringContainsString('[--expanded-navbar-offset:clamp(12.3125rem,calc(5.8555rem+32.2266vw),16.5rem)]', $html);
+        $this->assertStringContainsString('lg:[--expanded-navbar-offset:8.75rem]', $html);
+        $this->assertStringContainsString('xl:[--expanded-navbar-offset:10.25rem]', $html);
         $this->assertStringContainsString('href="#main-content"', $html);
     }
 
-    public function test_transparent_layout_does_not_offset_main(): void
+    public function test_homepage_overlay_layout_does_not_offset_main(): void
     {
         $this->withoutVite();
 
-        $html = view('layouts.app', ['transparentNavigation' => true])->render();
+        $html = view('layouts.app', ['navigationOverlaysContent' => true])->render();
 
-        $this->assertStringNotContainsString('pt-[4.5rem] lg:pt-16', $html);
+        $this->assertStringNotContainsString('pt-[var(--expanded-navbar-offset)]', $html);
     }
 }
